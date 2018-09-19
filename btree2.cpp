@@ -22,6 +22,63 @@ typedef struct TStack{
     int top;
 }TStack;
 
+typedef struct Qu{
+    BTree * data[50];
+   // int LeverCount[50];
+    int front,rear;
+}Qu;
+
+
+
+//先序自动创建二叉树
+//int _data[] = {1,2,3,-1,-1,4,-1,-1,5,6,-1,-1,7,-1,-1};
+int _data[] = {1,2,3,-1,-1,-1,5,-1,-1};
+static int count = 0;
+int _Lever = 0;
+
+
+// 计算最大宽度
+// 以及计算层数
+int BTWidth(BTree * t){
+    int LeverCount[100];
+    int max = -1;
+    Qu _queue;
+    _queue.front = -1;
+    _queue.rear = -1;
+    int last=0;
+    int Lever = 0;
+    int count=0;
+    _queue.data[++_queue.rear] = t;
+    BTree * p;
+    while(_queue.front < _queue.rear){
+        p = _queue.data[++_queue.front];
+        count +=1;
+        if(p->lchild!=NULL)
+            _queue.data[++_queue.rear] = p->lchild;
+        if(p->rchild!=NULL)
+            _queue.data[++_queue.rear] = p->rchild;
+        // key
+        if(_queue.front==last){
+            Lever++;
+            cout<<"count:"<<count<<endl;
+            LeverCount[Lever] = count;
+           // echoLeverWidth[Lever] = count;
+            last = _queue.rear;
+            count = 0;
+        }
+    }
+    max = LeverCount[1];
+    //cout<<"_max:"<<max<<endl;
+    for(int i=1;i<=Lever;i++){
+        if(max<LeverCount[i])
+            max = LeverCount[i];
+    }
+    cout<<"the tree's Lever is:"<<Lever<<endl;
+    return max;
+}
+
+
+
 bool isEmpty(TStack s){
     if(s.top==-1){
         //cout<<"kong\n";
@@ -51,8 +108,11 @@ BTree* createTree(BTree* T) {
 
 	cout << "输入数据(-1表示空节点):";
 	int data;
-	scanf("%d",&data);
-	if (data == -1)
+	//scanf("%d",&data);
+    cout<<_data[count]<<endl;;
+	data = _data[count];
+    count++;
+    if (data == -1)
 		return NULL;
 	else
 	{
@@ -101,6 +161,22 @@ int isSatisfyHeap(BTree * tree) {
 		}
 	}
 	return 1;
+}
+
+void PreOrderBiTreeWithOutLeaf(BTree *T)
+{
+	if (T == NULL)
+	{
+		return;
+	}
+	else
+	{
+        if(T->lchild!=NULL||T->rchild!=NULL){
+	    	printf("%d ", T->data);
+        }
+		PreOrderBiTreeWithOutLeaf(T->lchild);
+		PreOrderBiTreeWithOutLeaf(T->rchild);
+	}
 }
 
 void PreOrderBiTree(BTree *T)
@@ -159,6 +235,45 @@ void PreOrder(BTree * T)
 	}
 }
 
+//寻找最近的公共祖先
+void ancestor(BTree* tree,BTree *m,BTree *n)
+{
+    
+    int i = 0;
+    TStack s;
+   
+    s.top = -1;
+    BTree * p = tree;
+    BTree * r = NULL;
+    while(p!=NULL || !isEmpty(s))
+    {
+        if(p!=NULL){
+            push(&s,p);
+            p = p->lchild;
+        }
+        else
+        {
+
+            p = getTop(s);
+            if(p->rchild&&p->rchild!=r)
+            {
+                p = p->rchild; //上一个结点向右边走
+                push(&s,p);
+                p = p->lchild;
+            }
+            else
+            {
+                p = pop(&s);
+                printf("%5d",p->data);
+                r = p;
+                p = NULL;
+            }
+        }
+    }
+    printf("\n");
+}
+
+//非递归后序遍历
 void postOrder(BTree * tree)
 {
     
@@ -170,9 +285,6 @@ void postOrder(BTree * tree)
     BTree * r = NULL;
     while(p!=NULL || !isEmpty(s))
     {
-        if(++i > 8){
-            break;
-        }
         //cout<<"if "<<s.top<<"----------"<<s.data[s.top]->data<<endl;
         if(p!=NULL){
             push(&s,p);
@@ -204,16 +316,50 @@ void postOrder(BTree * tree)
 }
 
 
+
+void swap(BTree * b){
+    if(b){
+        swap(b->lchild);
+        swap(b->rchild);
+        // 从最底端开始交换，子结点所有子结点交换了之后
+        // 交换这个两个上头的子结点
+        BTree * temp = b->lchild;
+        b->lchild = b->rchild;
+        b->rchild = temp;
+    }
+}
+
+
 int main()
 {
+
 	BTree *T=NULL;
 	T = createTree(T);
 	cout << "test" << endl;
     PreOrderBiTree(T);
-	cout<<"\n------------------------------\n";
+	cout<<endl<<"非叶子结点：";
+    PreOrderBiTreeWithOutLeaf(T);
+    cout<<endl;
+    //int echoLeverWidth[100];
+    int max = BTWidth(T); 
+    cout<<"max width is:"<<max<<endl;
+    
+    
+    /*
+    cout<<"\n------------------------------\n";
+    //cout<<endl;
+    postOrder(T);
+    cout<<"\n------------------------------"<<endl;
+    swap(T);
+    PreOrderBiTree(T);
     postOrder(T);
     //PreOrder(T);
-	/*
+	
+    */
+    
+    
+    
+    /*
     LeverOrder(T);
 	int res = isSatisfyHeap(T);
 	cout << "res : " << res<<endl;
@@ -227,5 +373,6 @@ int main()
 	}
 	system("pause");
     */
+    cout<<endl;
     return 0;
 }
