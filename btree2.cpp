@@ -41,6 +41,8 @@ typedef struct Qu{
 //int _data[] = {1,2,3,-1,-1,4,-1,-1,5,6,-1,-1,7,-1,-1};
 int _data[] = {1,2,3,-1,-1,-1,5,-1,-1};
 char _data_char[] = {'*','+','a','#','#','b','#','#','*','c','#','#','-','#','d','#','#'};
+char _data_char2[] = {'+','+','a','#','#','b','#','#','+','c','#','#','+','d','#','#','e','#','#'};
+
 static int count = 0;
 int _Lever = 0;
 
@@ -118,8 +120,8 @@ BTree_char* createTree_char(BTree_char* T) {
 	cout << "输入数据(-1表示空节点):";
 	char data;
 	//scanf("%d",&data);
-    cout<<_data_char[count]<<endl;;
-	data = _data_char[count];
+    cout<<_data_char2[count]<<endl;;
+	data = _data_char2[count];
     count++;
     if (data == '#')
 		return NULL;
@@ -257,6 +259,29 @@ void InOrderBiTree_char(BTree_char *T)
         InOrderBiTree_char(T->rchild);
 	}
 }
+
+void BTree_char2Exp(BTree_char * T,int deep){
+    
+//    cout<<"-->\n";
+    if(T==NULL) 
+        return;
+    else if(T->lchild==NULL && T->rchild==NULL)
+        printf("%c",T->data);
+    else {
+        if(deep>1){
+            printf("(");
+        }
+        BTree_char2Exp(T->lchild,deep+1);
+        printf("%c",T->data);
+        BTree_char2Exp(T->rchild,deep+1);
+        if(deep>1)
+            printf(")");
+    }
+}
+void BTree_char2E(BTree_char * T){
+    BTree_char2Exp(T,1);
+}
+
 
 
 // 二叉树的层序遍历 使用队列若该节点的左右孩子不为空，则入队
@@ -432,6 +457,8 @@ void testBtree_char(){
     PreOrderBiTree_char(T);
     cout<<endl;
     InOrderBiTree_char(T);
+    cout<<endl;
+    BTree_char2E(T);
     cout<<endl;
 }
 int main()
