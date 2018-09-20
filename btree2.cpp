@@ -328,7 +328,19 @@ void swap(BTree * b){
         b->rchild = temp;
     }
 }
+//将前序变成后序序列
+void preToPost(char pre[],int l1,int h1,char post[],int l2,int h2){
+    
+    if(l1<=h1){
 
+        // 处理结点，的第一个结点即为  的最后一个结点
+        post[h2] = pre[l1];
+        // 处理左边的左子树
+        int half = (h1-l1)/2;
+        preToPost(pre,l1+1,l1+half,post,l2,l2+half-1);
+        preToPost(pre,l1+half+1,h1,post,l2+half,h2-1);
+    }
+}
 
 int main()
 {
@@ -340,10 +352,15 @@ int main()
 	cout<<endl<<"非叶子结点：";
     PreOrderBiTreeWithOutLeaf(T);
     cout<<endl;
+    char *pre = "1245367";
+    char post[100];
+    preToPost(pre,0,6,post,0,6);
+    cout<<"post order :"<<post<<endl;
     //int echoLeverWidth[100];
+   /*
     int max = BTWidth(T); 
     cout<<"max width is:"<<max<<endl;
-    
+    */
     
     /*
     cout<<"\n------------------------------\n";
