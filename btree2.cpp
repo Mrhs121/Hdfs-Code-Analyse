@@ -17,6 +17,13 @@ typedef struct BTree {
 	struct BTree* rchild;
 }BTree;
 
+typedef struct BTree_char {
+    char data;
+    struct BTree_char * lchild;
+    struct BTree_char * rchild;
+}BTree_char;
+
+
 typedef struct TStack{
     BTree * data[50];
     int top;
@@ -33,6 +40,7 @@ typedef struct Qu{
 //先序自动创建二叉树
 //int _data[] = {1,2,3,-1,-1,4,-1,-1,5,6,-1,-1,7,-1,-1};
 int _data[] = {1,2,3,-1,-1,-1,5,-1,-1};
+char _data_char[] = {'*','+','a','#','#','b','#','#','*','c','#','#','-','#','d','#','#'};
 static int count = 0;
 int _Lever = 0;
 
@@ -103,6 +111,34 @@ BTree * getTop(TStack s)
 {
     return s.data[s.top];
 }
+
+
+BTree_char* createTree_char(BTree_char* T) {
+
+	cout << "输入数据(-1表示空节点):";
+	char data;
+	//scanf("%d",&data);
+    cout<<_data_char[count]<<endl;;
+	data = _data_char[count];
+    count++;
+    if (data == '#')
+		return NULL;
+	else
+	{
+		T = (BTree_char*)malloc(sizeof(BTree_char));
+		T->data = data;
+		cout <<"input "<< data <<" 的左子树:" << endl;
+		T->lchild = createTree_char(T->lchild);
+		cout << "input " << data <<" 的右子树:" << endl;
+		T->rchild = createTree_char(T->rchild);
+	}
+	return T;
+}
+
+
+
+
+
 
 BTree* createTree(BTree* T) {
 
@@ -192,6 +228,36 @@ void PreOrderBiTree(BTree *T)
 		PreOrderBiTree(T->rchild);
 	}
 }
+
+void PreOrderBiTree_char(BTree_char *T)
+{
+	if (T == NULL)
+	{
+		return;
+	}
+	else
+	{
+		printf("%c ", T->data);
+		PreOrderBiTree_char(T->lchild);
+		PreOrderBiTree_char(T->rchild);
+	}
+}
+
+void InOrderBiTree_char(BTree_char *T)
+{
+	if (T == NULL)
+	{
+		return;
+	}
+	else
+	{
+	//	printf("%d ", T->data);
+		InOrderBiTree_char(T->lchild);
+	    cout<<T->data<<" ";
+        InOrderBiTree_char(T->rchild);
+	}
+}
+
 
 // 二叉树的层序遍历 使用队列若该节点的左右孩子不为空，则入队
 void LeverOrder(BTree * root)
@@ -342,20 +408,36 @@ void preToPost(char pre[],int l1,int h1,char post[],int l2,int h2){
     }
 }
 
-int main()
-{
-
+void testBtree(){
 	BTree *T=NULL;
-	T = createTree(T);
+	cout<<"--------------- create tree-------------------\n";
+    T = createTree(T);
+    cout<<"\n---------------   finish  ---------------------\n";
 	cout << "test" << endl;
     PreOrderBiTree(T);
 	cout<<endl<<"非叶子结点：";
     PreOrderBiTreeWithOutLeaf(T);
     cout<<endl;
-    char *pre = "1245367";
+    char * pre = "1245367";
     char post[100];
     preToPost(pre,0,6,post,0,6);
+    cout<<"pre order:"<<pre<<endl;
     cout<<"post order :"<<post<<endl;
+  
+}
+
+void testBtree_char(){
+    BTree_char * T=NULL;
+    T = createTree_char(T);
+    PreOrderBiTree_char(T);
+    cout<<endl;
+    InOrderBiTree_char(T);
+    cout<<endl;
+}
+int main()
+{
+    //testBtree();
+    testBtree_char();
     //int echoLeverWidth[100];
    /*
     int max = BTWidth(T); 
