@@ -32,7 +32,7 @@ void divide(int arr[],int left,int right){
 }
 
 
-
+// 时间复杂度O(n) 空间复杂度O(1)
 int main()
 {
     int arr[7] = {2,2,1,2,2,2,1};
