@@ -33,7 +33,7 @@ LNode * create(int data[],int n)
     }
     return head;
 
-
+}
 // 2018 839 判断表b是否包含在a中 时间O(n)
 int  isAIncludeB(LNode *a,LNode*b)
 {
@@ -66,8 +66,43 @@ int  isAIncludeB(LNode *a,LNode*b)
     }
     //return FALSE;
 }
-int main()
-{
+
+// 奇偶划分
+void divide(int arr[],int left,int right){
+
+    int base = arr[left];
+    int l = left;
+    int r = right;
+    int temp;
+    while(l<r){
+        while(arr[r]%2==0 && l<r){
+            r--;
+        }
+        while(arr[l]%2!=0 && l<r){
+            l++;
+        }
+        // 当左边遇到偶数的时候，右边遇到奇数的时候，交换
+        printf("swap %d <-- >%d\n",r,l);
+        if(arr[l]%2==0&&arr[r]%2!=0){
+            temp = arr[r];
+            arr[r] = arr[l];
+            arr[l] = temp;
+        }   
+    }   
+}
+
+
+void  testDivid(){
+    int arr[7] = {2,2,1,2,2,2,1};
+    divide(arr,0,6);
+    int i=0;
+    for(i=0;i<7;i++){
+        printf("%4d",arr[i]);
+    }
+    printf("\n");
+}
+
+void testIsInclude(){
     int a[] = {1,2,3,4,5,6,7,8};
     int b[] = {1,2,3};
     LNode * A = create(a,8);
@@ -77,6 +112,10 @@ int main()
     } else {
         printf("not included B\n");
     }
+}
+int main()
+{
+    testIsInclude(); 
     return 0;
 }
 
