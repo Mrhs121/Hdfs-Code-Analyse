@@ -27,6 +27,14 @@ void change(int **p){
 
 int main()
 {
+
+    char * b;
+    printf("%d\n",sizeof(b));
+    int * c;
+    printf("%d,%d\n",sizeof(c),sizeof(int));
+    char *a[] = {"hello", "world","dsajfhjkdahfkhdsjlaljka"};
+    printf("%d,%d\n",sizeof(a)/sizeof(a[0]),sizeof(a[0]));
+/*  
     int a = 1;
     printf("a address:%p, b address:%p\n",&a,&b);
     int *p = &a;
@@ -35,6 +43,7 @@ int main()
     printf("a = %d:, *p = %d,%p,p->%p\n",a,*p,&p,p); 
     change(&p);
     printf("*p = %d,p->%p\n",*p,p);
+*/
     return 0;
 }
 

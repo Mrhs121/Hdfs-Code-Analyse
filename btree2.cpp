@@ -2,7 +2,10 @@
 //
 
 
+#ifdef WINVER
 #include "stdafx.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
