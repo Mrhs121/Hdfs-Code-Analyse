@@ -32,13 +32,8 @@ LNode * create(int data[],int n)
         m = node;
     }
     return head;
-<<<<<<< HEAD
-
-}
-=======
 }
 
->>>>>>> 501cc11b196f698274a66240a6321c10770846e6
 // 2018 839 判断表b是否包含在a中 时间O(n)
 int  isAIncludeB(LNode *a,LNode*b)
 {
@@ -120,6 +115,7 @@ void testIsInclude(){
 }
 int main()
 {
+
     testIsInclude(); 
     return 0;
 }
