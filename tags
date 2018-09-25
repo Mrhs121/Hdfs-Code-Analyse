@@ -1,0 +1,78 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BST_Insert	btree2.cpp	/^int BST_Insert(BTree **T,int key){$/;"	f
+BST_search	btree2.cpp	/^BTree * BST_search(int data,BTree * T){$/;"	f
+BTWidth	btree2.cpp	/^int BTWidth(BTree * t) {$/;"	f
+BTree	btree2.cpp	/^typedef struct BTree {$/;"	s	file:
+BTree	btree2.cpp	/^}BTree;$/;"	t	typeref:struct:BTree	file:
+BTree_char	btree2.cpp	/^typedef struct BTree_char {$/;"	s	file:
+BTree_char	btree2.cpp	/^}BTree_char;$/;"	t	typeref:struct:BTree_char	file:
+BTree_char2E	btree2.cpp	/^void BTree_char2E(BTree_char * T) {$/;"	f
+BTree_char2Exp	btree2.cpp	/^void BTree_char2Exp(BTree_char * T, int deep) {$/;"	f
+BiThreadNode	ThreadTree.cpp	/^typedef struct BiThreadNode$/;"	s	file:
+BiThreadNode	ThreadTree.cpp	/^}BiThreadNode,*BiThreadTree;$/;"	t	typeref:struct:BiThreadNode	file:
+BiThreadTree	ThreadTree.cpp	/^}BiThreadNode,*BiThreadTree;$/;"	t	typeref:struct:BiThreadNode	file:
+InOrderBiTree	btree2.cpp	/^void InOrderBiTree(BTree *T)$/;"	f
+InOrderBiTree_char	btree2.cpp	/^void InOrderBiTree_char(BTree_char *T)$/;"	f
+LeverOrder	btree2.cpp	/^void LeverOrder(BTree * root)$/;"	f
+NO	btree2.cpp	14;"	d	file:
+PreOrder	btree2.cpp	/^void PreOrder(BTree * T)$/;"	f
+PreOrderBiTree	btree2.cpp	/^void PreOrderBiTree(BTree *T)$/;"	f
+PreOrderBiTreeWithOutLeaf	btree2.cpp	/^void PreOrderBiTreeWithOutLeaf(BTree *T)$/;"	f
+PreOrderBiTree_char	btree2.cpp	/^void PreOrderBiTree_char(BTree_char *T)$/;"	f
+Qu	btree2.cpp	/^typedef struct Qu {$/;"	s	file:
+Qu	btree2.cpp	/^}Qu;$/;"	t	typeref:struct:Qu	file:
+TStack	btree2.cpp	/^typedef struct TStack {$/;"	s	file:
+TStack	btree2.cpp	/^}TStack;$/;"	t	typeref:struct:TStack	file:
+Tag	ThreadTree.cpp	/^enum Tag{link,thread};  \/\/这里定义一个枚举类型，link（0）表示指向孩子，thread(1)表示指向前驱后继的线索$/;"	g	file:
+YES	btree2.cpp	13;"	d	file:
+_Lever	btree2.cpp	/^int _Lever = 0;$/;"	v
+_count	btree2.cpp	/^static int _count = 0;$/;"	v	file:
+_data	btree2.cpp	/^int _data[] = { 1,2,3,-1,-1,-1,5,-1,-1 };$/;"	v
+_data_char	btree2.cpp	/^char _data_char[] = { '*','+','a','#','#','b','#','#','*','c','#','#','-','#','d','#','#' };$/;"	v
+_data_char2	btree2.cpp	/^char _data_char2[] = { '+','+','a','#','#','b','#','#','+','c','#','#','+','d','#','#','e','#','#' };$/;"	v
+_data_sortTree	btree2.cpp	/^int _data_sortTree[] = {6,2,1,-1,-1,4,3,-1,-1,-1,8,-1,-1};$/;"	v
+ancestor	btree2.cpp	/^void ancestor(BTree* tree, BTree *m, BTree *n)$/;"	f
+createBtTree	ThreadTree.cpp	/^void createBtTree (BiThreadTree &T)$/;"	f
+createTree	btree2.cpp	/^BTree* createTree(BTree* T,int _data[]) {$/;"	f
+createTree_char	btree2.cpp	/^BTree_char* createTree_char(BTree_char* T) {$/;"	f
+data	ThreadTree.cpp	/^    char data;$/;"	m	struct:BiThreadNode	file:
+data	btree2.cpp	/^	BTree * data[50];$/;"	m	struct:Qu	file:
+data	btree2.cpp	/^	BTree * data[50];$/;"	m	struct:TStack	file:
+data	btree2.cpp	/^	char data;$/;"	m	struct:BTree_char	file:
+data	btree2.cpp	/^	int data;$/;"	m	struct:BTree	file:
+front	btree2.cpp	/^	int front, rear;$/;"	m	struct:Qu	file:
+getTop	btree2.cpp	/^BTree * getTop(TStack s)$/;"	f
+inOrderThread	ThreadTree.cpp	/^void inOrderThread(BiThreadTree &p,BiThreadTree &t)$/;"	f
+inOrderVisit	ThreadTree.cpp	/^void inOrderVisit(BiThreadTree p)$/;"	f
+isEmpty	btree2.cpp	/^bool isEmpty(TStack s) {$/;"	f
+isSatisfyHeap	btree2.cpp	/^int isSatisfyHeap(BTree * tree) {$/;"	f
+lchild	ThreadTree.cpp	/^    struct BiThreadNode *lchild,*rchild;$/;"	m	struct:BiThreadNode	typeref:struct:BiThreadNode::BiThreadNode	file:
+lchild	btree2.cpp	/^	struct BTree* lchild;$/;"	m	struct:BTree	typeref:struct:BTree::BTree	file:
+lchild	btree2.cpp	/^	struct BTree_char * lchild;$/;"	m	struct:BTree_char	typeref:struct:BTree_char::BTree_char	file:
+link	ThreadTree.cpp	/^enum Tag{link,thread};  \/\/这里定义一个枚举类型，link（0）表示指向孩子，thread(1)表示指向前驱后继的线索$/;"	e	enum:Tag	file:
+ltag	ThreadTree.cpp	/^    Tag ltag,rtag;$/;"	m	struct:BiThreadNode	file:
+main	ThreadTree.cpp	/^int main()$/;"	f
+main	btree2.cpp	/^int main()$/;"	f
+maxsize	btree2.cpp	15;"	d	file:
+midOrderThread	ThreadTree.cpp	/^void midOrderThread(BiThreadTree &T)$/;"	f
+pop	btree2.cpp	/^BTree * pop(TStack * s)$/;"	f
+postOrder	btree2.cpp	/^void postOrder(BTree * tree)$/;"	f
+pre	ThreadTree.cpp	/^BiThreadTree pre;$/;"	v
+preToPost	btree2.cpp	/^void preToPost(char pre[], int l1, int h1, char post[], int l2, int h2) {$/;"	f
+push	btree2.cpp	/^void push(TStack * s, BTree * node) {$/;"	f
+rchild	ThreadTree.cpp	/^    struct BiThreadNode *lchild,*rchild;$/;"	m	struct:BiThreadNode	typeref:struct:BiThreadNode::	file:
+rchild	btree2.cpp	/^	struct BTree* rchild;$/;"	m	struct:BTree	typeref:struct:BTree::BTree	file:
+rchild	btree2.cpp	/^	struct BTree_char * rchild;$/;"	m	struct:BTree_char	typeref:struct:BTree_char::BTree_char	file:
+rear	btree2.cpp	/^	int front, rear;$/;"	m	struct:Qu	file:
+rtag	ThreadTree.cpp	/^    Tag ltag,rtag;$/;"	m	struct:BiThreadNode	file:
+swap	btree2.cpp	/^void swap(BTree * b) {$/;"	f
+testBST	btree2.cpp	/^void testBST(){$/;"	f
+testBtree	btree2.cpp	/^void testBtree() {$/;"	f
+testBtree_char	btree2.cpp	/^void testBtree_char() {$/;"	f
+thread	ThreadTree.cpp	/^enum Tag{link,thread};  \/\/这里定义一个枚举类型，link（0）表示指向孩子，thread(1)表示指向前驱后继的线索$/;"	e	enum:Tag	file:
+top	btree2.cpp	/^	int top;$/;"	m	struct:TStack	file:
