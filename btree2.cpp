@@ -48,6 +48,7 @@ typedef struct Qu {
 //先序自动创建二叉树
 //int _data[] = {1,2,3,-1,-1,4,-1,-1,5,6,-1,-1,7,-1,-1};
 int _data[] = { 1,2,3,-1,-1,-1,5,-1,-1 };
+int _data_sortTree[] = {6,2,1,-1,-1,4,3,-1,-1,-1,8,-1,-1};
 char _data_char[] = { '*','+','a','#','#','b','#','#','*','c','#','#','-','#','d','#','#' };
 char _data_char2[] = { '+','+','a','#','#','b','#','#','+','c','#','#','+','d','#','#','e','#','#' };
 
@@ -151,7 +152,7 @@ BTree_char* createTree_char(BTree_char* T) {
 
 
 
-BTree* createTree(BTree* T) {
+BTree* createTree(BTree* T,int _data[]) {
 
 	cout << "输入数据(-1表示空节点):";
 	int data;
@@ -166,9 +167,9 @@ BTree* createTree(BTree* T) {
 		T = (BTree*)malloc(sizeof(BTree));
 		T->data = data;
 		cout << "input " << data << " 的左子树:" << endl;
-		T->lchild = createTree(T->lchild);
+		T->lchild = createTree(T->lchild,_data);
 		cout << "input " << data << " 的右子树:" << endl;
-		T->rchild = createTree(T->rchild);
+		T->rchild = createTree(T->rchild,_data);
 	}
 	return T;
 }
@@ -254,6 +255,21 @@ void PreOrderBiTree_char(BTree_char *T)
 	}
 }
 
+void InOrderBiTree(BTree *T)
+{
+	if (T == NULL)
+	{
+		return;
+	}
+	else
+	{
+		//	printf("%d ", T->data);
+		InOrderBiTree(T->lchild);
+		cout << T->data << " ";
+		InOrderBiTree(T->rchild);
+	}
+}
+
 void InOrderBiTree_char(BTree_char *T)
 {
 	if (T == NULL)
@@ -268,7 +284,7 @@ void InOrderBiTree_char(BTree_char *T)
 		InOrderBiTree_char(T->rchild);
 	}
 }
-
+// 将中序序列转换成数学表达式
 void BTree_char2Exp(BTree_char * T, int deep) {
 
 	//    cout<<"-->\n";
@@ -338,39 +354,8 @@ void PreOrder(BTree * T)
 //寻找最近的公共祖先
 void ancestor(BTree* tree, BTree *m, BTree *n)
 {
+    // 有点复杂
 
-	int i = 0;
-	TStack s;
-
-	s.top = -1;
-	BTree * p = tree;
-	BTree * r = NULL;
-	while (p != NULL || !isEmpty(s))
-	{
-		if (p != NULL) {
-			push(&s, p);
-			p = p->lchild;
-		}
-		else
-		{
-
-			p = getTop(s);
-			if (p->rchild&&p->rchild != r)
-			{
-				p = p->rchild; //上一个结点向右边走
-				push(&s, p);
-				p = p->lchild;
-			}
-			else
-			{
-				p = pop(&s);
-				printf("%5d", p->data);
-				r = p;
-				p = NULL;
-			}
-		}
-	}
-	printf("\n");
 }
 
 //非递归后序遍历
@@ -443,16 +428,29 @@ void preToPost(char pre[], int l1, int h1, char post[], int l2, int h2) {
 }
 
 void testBtree() {
-	BTree *T = NULL;
+	BTree * BST_search(int ,BTree*);
+    BTree *T = NULL;
 	cout << "--------------- create tree-------------------\n";
-	T = createTree(T);
+	T = createTree(T,_data_sortTree);
 	cout << "\n---------------   finish  ---------------------\n";
 	cout << "test" << endl;
 	PreOrderBiTree(T);
 	cout << endl << "非叶子结点：";
 	PreOrderBiTreeWithOutLeaf(T);
-	cout << endl;
-	char * pre = "1245367";
+    cout<<endl;
+    InOrderBiTree(T);
+    cout << endl;
+    BTree * t = BST_search(10,T);
+    if(t!=NULL){
+        cout<<"bst search res is:"<<t->data<<endl;
+    }else{
+        cout<<"not find "<<1<<"in the tree "<<endl;
+    }
+    
+    
+    
+    cout<<"-------------------------------\n";
+    char * pre = "1245367";
 	char post[100];
 	preToPost(pre, 0, 6, post, 0, 6);
 	cout << "pre order:" << pre << endl;
@@ -470,10 +468,60 @@ void testBtree_char() {
 	BTree_char2E(T);
 	cout << endl;
 }
+
+// 查找树的创建/插入
+
+int BST_Insert(BTree **T,int key){
+    if(*T == NULL){
+        *T = (BTree*)malloc(sizeof(BTree));
+        (*T)->data = key;
+        (*T)->lchild=(*T)->rchild = NULL;
+        return 1;
+    }
+    else if(key==(*T)->data){
+        return 0;
+    } else if(key<(*T)->data){
+        return BST_Insert(&(*T)->lchild,key);
+    } else {
+        return BST_Insert(&(*T)->rchild,key);
+    }
+}
+
+//   查找树的递归查找
+BTree * BST_search(int data,BTree * T){
+    if(T==NULL){
+        return  NULL;
+    }
+    if(data == T->data){
+        return T;
+    }
+    if(data < T->data){
+        return BST_search(data,T->lchild);
+    }else{
+        return BST_search(data,T->rchild);
+    }
+}
+
+void testBST(){
+    BTree* T=NULL ;
+    int q[] = {10,4,5,2,3,6,7};
+    int i=0;
+    for(i=0;i<7;i++){
+        BST_Insert(&T,q[i]);
+    }
+    InOrderBiTree(T);
+    cout<<"---------------------\n";
+    PreOrderBiTree(T);
+    cout<<"---------------------\n";
+    LeverOrder(T);
+    cout<<"----------------------\n";
+}
+
 int main()
 {
-	//testBtree();
-	testBtree_char();
+    testBST();
+//	testBtree();
+	//testBtree_char();
 	//int echoLeverWidth[100];
 	/*
 	int max = BTWidth(T);
