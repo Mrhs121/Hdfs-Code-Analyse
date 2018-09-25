@@ -15,6 +15,47 @@ typedef struct LNode{
     struct LNode * next;
 }LNode,*linklist;
 
+
+typedef struct BTree {
+	int data;
+	struct BTree* lchild;
+	struct BTree* rchild;
+}BTree;
+
+typedef struct BTree_char {
+	char data;
+	struct BTree_char * lchild;
+	struct BTree_char * rchild;
+}BTree_char;
+
+
+typedef struct TStack {
+	BTree * data[50];
+	int top;
+}TStack;
+
+typedef struct Qu {
+	BTree * data[50];
+	// int LeverCount[50];
+	int front, rear;
+}Qu;
+
+
+
+//先序自动创建二叉树
+int _data1[] = {1,2,3,-1,-1,4,-1,-1,5,6,-1,-1,7,-1,-1};
+int _data[] = {1,2,3,4,-1,-1,5,-1,-1,6,-1,-1,7,-1,-1};
+int _data2[] = { 1,2,3,-1,-1,-1,5,-1,-1 };
+int _data_sortTree[] = {6,2,1,-1,-1,4,3,-1,-1,-1,8,-1,-1};
+char _data_char[] = { '*','+','a','#','#','b','#','#','*','c','#','#','-','#','d','#','#' };
+char _data_char2[] = { '+','+','a','#','#','b','#','#','+','c','#','#','+','d','#','#','e','#','#' };
+
+static int _count = 0;
+int _Lever = 0;
+
+
+
+
 // create linklist with headnode
 LNode * create(int data[],int n)
 {
@@ -113,6 +154,45 @@ void testIsInclude(){
         printf("not included B\n");
     }
 }
+
+int isSatisfyHeap(BTree * tree) {
+	BTree * stack[100];
+	int top = -1;
+	stack[++top] = tree;
+	BTree * p;
+	while (top != -1)
+	{
+		p = stack[top--];
+
+		// 左右孩子均不能大于根结点
+		if (p->lchild != NULL)
+		{
+
+			if (p->data < p->lchild->data)
+			{
+				return -1;
+			}
+
+			stack[++top] = p->lchild;
+		}
+
+		if (p->rchild != NULL)
+		{
+
+			if (p->data < p->rchild->data)
+			{
+				return -1;
+			}
+
+			stack[++top] = p->lchild;
+		}
+	}
+    // 队列 also ok
+	return 1;
+}
+
+
+
 int main()
 {
 

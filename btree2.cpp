@@ -242,6 +242,20 @@ void PreOrderBiTree(BTree *T)
 	}
 }
 
+void PreOrderBiTreeWithLever(BTree *T,int lever)
+{
+	if (T == NULL)
+	{
+		return;
+	}
+	else
+	{
+		printf(" %d-----> %d ",lever ,T->data);
+		PreOrderBiTreeWithLever(T->lchild,lever+1);
+		PreOrderBiTreeWithLever(T->rchild,lever+1);
+	}
+}
+
 void postOrderBiTree(BTree *T)
 {
 	if (T == NULL)
@@ -331,17 +345,25 @@ void LeverOrder(BTree * root)
 	int front = -1;
 	int rear = -1;
 	BTree * Q[1000];
-	Q[++rear] = root;
+    int last = 0;
+    Q[++rear] = root;
+    last = rear;
+    int l=1;
 	BTree * q = (BTree*)malloc(sizeof(BTree));
 	while (front != rear)
 	{
 		q = Q[++front];
-		cout << q->data << endl;
+		cout <<l<<"----> "<< q->data<<" ";
 		// 左右孩子入队
 		if (q->lchild != NULL)
 			Q[++rear] = q->lchild;
 		if (q->rchild != NULL)
 			Q[++rear] = q->rchild;
+        if(front == last){
+            last = rear;
+            l++;
+            cout<<endl;
+        }
 	}
 
 }
@@ -361,6 +383,7 @@ void PreOrder(BTree * T)
 		}
 		if (top != -1)
 		{
+            // gettop and pop 
 			T = s[top--];
 			T = T->rchild;
 		}
@@ -403,7 +426,7 @@ BTree * ancestor(BTree* root, int node1, int node2)
 // 王道解法
 BTree * ancestor_wd(BTree * root,BTree * p,BTree * q)
 {
-
+    return  NULL;
 }
 //非递归后序遍历
 void postOrder(BTree * tree)
@@ -473,6 +496,25 @@ void preToPost(char pre[], int l1, int h1, char post[], int l2, int h2) {
 		preToPost(pre, l1 + half + 1, h1, post, l2 + half, h2 - 1);
 	}
 }
+// 获取与key的数值相同的路径
+void getPathByKey(BTree * T,int key){
+    if(T==NULL){
+        return;
+    }    
+   // printf("hello world");
+} 
+
+void testPath(){
+    int data[] = {10,5,4,-1,-1,7,-1,-1,12,-1,-1};
+    BTree * T = NULL;
+    T = createTree(T,data);
+    LeverOrder(T);
+    cout<<"------------------"<<endl;
+    cout<<" ----> "<<T->data<<endl;
+    PreOrderBiTree(T);
+    getPathByKey(T,22);
+}
+
 
 void testBtree() {
 	BTree * BST_search(int ,BTree*);
@@ -480,8 +522,11 @@ void testBtree() {
 	cout << "--------------- create tree-------------------\n";
 	T = createTree(T,_data_sortTree);
 	cout << "\n---------------   finish  ---------------------\n";
-	cout << "test" << endl;
-	PreOrderBiTree(T);
+	LeverOrder(T);
+    cout << "\ntest" << endl;
+	PreOrderBiTreeWithLever(T,1);
+    /*
+    PreOrderBiTree(T);
 	cout << endl << "非叶子结点：";
 	PreOrderBiTreeWithOutLeaf(T);
     cout<<endl;
@@ -502,7 +547,7 @@ void testBtree() {
 	preToPost(pre, 0, 6, post, 0, 6);
 	cout << "pre order:" << pre << endl;
 	cout << "post order :" << post << endl;
-
+    */
 }
 
 void testBtree_char() {
@@ -528,6 +573,7 @@ int BST_Insert(BTree **T,int key){
     else if(key==(*T)->data){
         return 0;
     } else if(key<(*T)->data){
+        // 直接对原链进行修改
         return BST_Insert(&(*T)->lchild,key);
     } else {
         return BST_Insert(&(*T)->rchild,key);
@@ -548,10 +594,33 @@ BTree * BST_search(int data,BTree * T){
         return BST_search(data,T->rchild);
     }
 }
+// 在给定 排序树中 输出比 可以 大的结点 从大到小
+void OutPut(BTree * bst_tree,int key){
+    if(bst_tree == NULL){
+        return;
+    }
+    if(bst_tree->rchild != NULL){
+        OutPut(bst_tree->rchild,key);
+    }
+    if(bst_tree->data > key){
+        printf("biger :%d\n",bst_tree->data);
+    } else {
+        printf("small :%d\n",bst_tree->data);
+    }
+    if(bst_tree->lchild!=NULL){
+        OutPut(bst_tree->lchild,key);
+    }
+}
+
+BTree * search_small(BTree * t,int k){
+    return  NULL;
+}
+
 
 void testBST(){
     BTree* T=NULL ;
-    int q[] = {10,4,5,2,3,6,7};
+   // int q[] = {10,4,5,2,3,6,11};
+    int q[] = {5,3,10,1,4,8,13};
     int i=0;
     for(i=0;i<7;i++){
         BST_Insert(&T,q[i]);
@@ -562,6 +631,7 @@ void testBST(){
     cout<<"---------------------\n";
     LeverOrder(T);
     cout<<"----------------------\n";
+    OutPut(T,4);
 }
 // 测试最近公共祖先
 void testAncestor(){
@@ -577,7 +647,11 @@ void testAncestor(){
 
 int main()
 {
-    testAncestor();
+    testPath();
+//    testBtree();
+//
+//testBST();
+    //    testAncestor();
    // testBST();
 //	testBtree();
 	//testBtree_char();
