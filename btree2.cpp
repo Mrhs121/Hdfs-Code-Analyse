@@ -46,8 +46,9 @@ typedef struct Qu {
 
 
 //先序自动创建二叉树
-//int _data[] = {1,2,3,-1,-1,4,-1,-1,5,6,-1,-1,7,-1,-1};
-int _data[] = { 1,2,3,-1,-1,-1,5,-1,-1 };
+int _data1[] = {1,2,3,-1,-1,4,-1,-1,5,6,-1,-1,7,-1,-1};
+int _data[] = {1,2,3,4,-1,-1,5,-1,-1,6,-1,-1,7,-1,-1};
+int _data2[] = { 1,2,3,-1,-1,-1,5,-1,-1 };
 int _data_sortTree[] = {6,2,1,-1,-1,4,3,-1,-1,-1,8,-1,-1};
 char _data_char[] = { '*','+','a','#','#','b','#','#','*','c','#','#','-','#','d','#','#' };
 char _data_char2[] = { '+','+','a','#','#','b','#','#','+','c','#','#','+','d','#','#','e','#','#' };
@@ -241,6 +242,21 @@ void PreOrderBiTree(BTree *T)
 	}
 }
 
+void postOrderBiTree(BTree *T)
+{
+	if (T == NULL)
+	{
+		return;
+	}
+	else
+	{
+	//	printf("%d ", T->data);
+		PreOrderBiTree(T->lchild);
+		PreOrderBiTree(T->rchild);
+		printf("%d ", T->data);
+    }
+}
+
 void PreOrderBiTree_char(BTree_char *T)
 {
 	if (T == NULL)
@@ -352,12 +368,43 @@ void PreOrder(BTree * T)
 }
 
 //寻找最近的公共祖先
-void ancestor(BTree* tree, BTree *m, BTree *n)
+// 从根节点开始遍历，如果node1和node2中的任一个和root匹配
+// ，那么root就是最低公共祖先。 
+// 如果都不匹配，则分别递归左、右子树，
+// 如果有一个 节点出现在左子树，
+// 并且另一个节点出现在右子树，则
+// root就是最低公共祖先. 
+// 如果两个节点都出现在左子树，
+// 则说明最低公共祖先在左子树中，
+// 否则在右子树
+BTree * ancestor(BTree* root, int node1, int node2)
 {
     // 有点复杂
-
+        if (root == NULL)
+            return NULL;
+     
+        if (node1 == root->data 
+            || node2 == root->data)
+            return root;
+     
+        BTree * cur = NULL;
+     
+        BTree * left_lca = ancestor(root->lchild, node1, node2);
+        BTree * right_lca = ancestor(root->rchild, node1, node2);
+        if (left_lca && right_lca)
+            return root;
+        if (left_lca == NULL)
+            return right_lca;
+        else
+            return left_lca;
+    
 }
 
+// 王道解法
+BTree * ancestor_wd(BTree * root,BTree * p,BTree * q)
+{
+
+}
 //非递归后序遍历
 void postOrder(BTree * tree)
 {
@@ -516,10 +563,22 @@ void testBST(){
     LeverOrder(T);
     cout<<"----------------------\n";
 }
+// 测试最近公共祖先
+void testAncestor(){
+    BTree * T = NULL;
+    T = createTree(T,_data);
+    PreOrderBiTree(T);
+    cout<<"-------------------\n";
+    BTree * res =  ancestor(T,5,6);
+    if(res!=NULL){
+        cout<<"the ancestor is :"<<res->data<<endl;
+    }
+}
 
 int main()
 {
-    testBST();
+    testAncestor();
+   // testBST();
 //	testBtree();
 	//testBtree_char();
 	//int echoLeverWidth[100];
