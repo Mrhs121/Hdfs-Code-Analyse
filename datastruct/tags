@@ -4,23 +4,32 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-ALGraph	graph.c	/^}ALGraph;$/;"	t	typeref:struct:__anon1	file:
+ALGraph	graph.c	/^}ALGraph;$/;"	t	typeref:struct:__anon2	file:
 AdjList	graph.c	/^}VNode,AdjList[MAXNUM];$/;"	t	typeref:struct:VNode	file:
 ArcNode	graph.c	/^typedef struct ArcNode{$/;"	s	file:
 ArcNode	graph.c	/^}ArcNode;$/;"	t	typeref:struct:ArcNode	file:
+Edge	graph.c	/^    int Edge[MAXNUM][MAXNUM];$/;"	m	struct:__anon1	file:
 I_ten	graph.c	/^typedef int I_ten[10];$/;"	t	file:
 MAXNUM	graph.c	3;"	d	file:
+MGraph	graph.c	/^}MGraph;$/;"	t	typeref:struct:__anon1	file:
 VNode	graph.c	/^typedef struct VNode{$/;"	s	file:
 VNode	graph.c	/^}VNode,AdjList[MAXNUM];$/;"	t	typeref:struct:VNode	file:
+V_Type	graph.c	6;"	d	file:
 VertexType	graph.c	/^typedef int VertexType;$/;"	t	file:
+Vex	graph.c	/^    char Vex[MAXNUM];$/;"	m	struct:__anon1	file:
 adjvex	graph.c	/^    int adjvex; \/\/vertices index$/;"	m	struct:ArcNode	file:
-arcnum	graph.c	/^    int vexnum,arcnum;$/;"	m	struct:__anon1	file:
+arcnum	graph.c	/^    int vexnum,arcnum;$/;"	m	struct:__anon2	file:
+create	graph.c	/^MGraph * create(){$/;"	f
 create_graph	graph.c	/^ALGraph * create_graph(){$/;"	f
 data	graph.c	/^    VertexType data;$/;"	m	struct:VNode	file:
+edgenum	graph.c	/^    int vexnum,edgenum;$/;"	m	struct:__anon1	file:
 fin	graph.c	/^FILE * fin;$/;"	v
 first	graph.c	/^    ArcNode * first;$/;"	m	struct:VNode	file:
 main	graph.c	/^int main()$/;"	f
 next	graph.c	/^    struct ArcNode * next;$/;"	m	struct:ArcNode	typeref:struct:ArcNode::ArcNode	file:
 print	graph.c	/^void print(ALGraph * g){$/;"	f
-vertices	graph.c	/^    AdjList vertices;$/;"	m	struct:__anon1	file:
-vexnum	graph.c	/^    int vexnum,arcnum;$/;"	m	struct:__anon1	file:
+testAlgraph	graph.c	/^void testAlgraph(){$/;"	f
+testMgraph	graph.c	/^void testMgraph(){$/;"	f
+vertices	graph.c	/^    AdjList vertices;$/;"	m	struct:__anon2	file:
+vexnum	graph.c	/^    int vexnum,arcnum;$/;"	m	struct:__anon2	file:
+vexnum	graph.c	/^    int vexnum,edgenum;$/;"	m	struct:__anon1	file:
