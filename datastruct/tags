@@ -8,10 +8,13 @@ ALGraph	graph.c	/^}ALGraph;$/;"	t	typeref:struct:__anon2	file:
 AdjList	graph.c	/^}VNode,AdjList[MAXNUM];$/;"	t	typeref:struct:VNode	file:
 ArcNode	graph.c	/^typedef struct ArcNode{$/;"	s	file:
 ArcNode	graph.c	/^}ArcNode;$/;"	t	typeref:struct:ArcNode	file:
+BFSTraverse	graph.c	/^void BFSTraverse(ALGraph * algraph)$/;"	f
 Edge	graph.c	/^    int Edge[MAXNUM][MAXNUM];$/;"	m	struct:__anon1	file:
 I_ten	graph.c	/^typedef int I_ten[10];$/;"	t	file:
 MAXNUM	graph.c	3;"	d	file:
 MGraph	graph.c	/^}MGraph;$/;"	t	typeref:struct:__anon1	file:
+NOT_VISITED	graph.c	8;"	d	file:
+VISITED	graph.c	7;"	d	file:
 VNode	graph.c	/^typedef struct VNode{$/;"	s	file:
 VNode	graph.c	/^}VNode,AdjList[MAXNUM];$/;"	t	typeref:struct:VNode	file:
 V_Type	graph.c	6;"	d	file:
