@@ -690,7 +690,7 @@ int main()
 	system("pause");
 	*/
 #ifdef WINVER
-    printf("win");
+	printf("win");
 	system("pause");
 #endif // WINVER
 
