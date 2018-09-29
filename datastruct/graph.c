@@ -39,6 +39,47 @@ typedef struct{
     int vexnum,arcnum;
 }ALGraph;
 // ----------------------------------------
+
+typedef struct Queue{
+    int data[MAXNUM];
+    int front;
+    int rear;
+}Q;
+    void init(Q **queue){
+        (*queue)->front = 0;
+        (*queue)->rear = 0;
+    }
+
+    void EnQueue(Q **queue,int _data){
+        (*queue)->data[((*queue)->rear)++] = _data;
+    }
+    int DeQueue(Q **queue){
+        //int f = queue->front;
+        //printf("%d,%d\n",queue->front,queue->data[f]);
+        //printf("->%d\n",queue->data[queue->front]);
+        
+        return (*queue)->data[(*queue)->front++];
+    }
+    int isEmpty(Q *queue){
+        return queue->front-queue->rear;
+    }
+
+// 打印邻接表的结构
+void printAlg(ALGraph * algraph){
+    int i=0;
+    printf("---------------邻接表的结构-----------------\n");
+    for(i=0;i<algraph->vexnum;i++){
+        printf("%d: %d-->",i,algraph->vertices[i].data);
+        ArcNode * p = algraph->vertices[i].first;
+        while(p!=NULL){
+            printf("%d(%d)-->",p->adjvex,algraph->vertices[p->adjvex].data);
+            p = p->next;
+        }
+        printf("\n");
+    }
+    printf("----------------------------------------------\n");
+}
+
 ALGraph * create_graph(){
     //int vexnum;
     ALGraph * algraph = (ALGraph*)malloc(sizeof(ALGraph));
@@ -129,8 +170,18 @@ void testAlgraph(){
     fin = fopen("g_input.txt","r");
     ALGraph * algraph = (ALGraph*)malloc(sizeof(ALGraph)); 
     algraph = create_graph();
-    void BFSTraverse(ALGraph * a);
-    BFSTraverse(algraph);
+    printAlg(algraph);
+    void BFSTraverse(ALGraph * a,int v);
+    void bfstraverse(ALGraph * a);
+    BFSTraverse(algraph,2);
+    printf("\n----------bfs-------------\n");
+    bfstraverse(algraph);
+    printf("\n");
+    void dfs_traverse(ALGraph * g);
+    printf("\n---> dfs\n");
+    dfs_traverse(algraph);
+    void BFS_MIN_Distance(ALGraph * a,int v);
+//    BFS_MIN_Distance(algraph,2);
 //    printf("test\n");
 //    printf("0 first is :%d\n",algraph->vertices[algraph->vertices[0].first->adjvex].data);
 //    printf("%d",algraph->vertices[algraph->vertices[0].first->next->adjvex].data); 
@@ -151,26 +202,29 @@ void testMgraph(){
 typedef struct{
     VNode  v;
     int adjvex;
-}Queue;
+}Queue1;
 
 
 // 广度优先
-void BFSTraverse(ALGraph * algraph)
+void BFSTraverse(ALGraph * algraph,int v)
 {
-    if(algraph == NULL){
+    if(algraph == NULL || v>algraph->vexnum-1){
         return;
     }
+    printf("form %d search\n",v);
     int i=0;
     int visited[MAXNUM];
     for(i=0;i<algraph->vexnum;i++){
         visited[i] = NOT_VISITED;
+        printf("%5d",algraph->vertices[i].data);
     }
+    printf("\n");
     //int adj = 0;
-    Queue queue[MAXNUM];
+    Queue1 queue[MAXNUM];
     int front=-1,rear=-1;
     ++rear;
-    queue[rear].v= algraph->vertices[3];
-    queue[rear].adjvex = 3;
+    queue[rear].v= algraph->vertices[v];
+    queue[rear].adjvex = v;
     ArcNode * temp = NULL;
    
     while(front!=rear){
@@ -179,7 +233,7 @@ void BFSTraverse(ALGraph * algraph)
         temp = p.first;
         if(visited[queue[front].adjvex]==NOT_VISITED){
             printf("visit ---> %d\n",p.data);
-            visited[p.data] = VISITED;
+            visited[queue[front].adjvex] = VISITED;
             while(temp != NULL){
                 ++rear;
                 queue[rear].v = algraph->vertices[temp->adjvex];
@@ -191,10 +245,175 @@ void BFSTraverse(ALGraph * algraph)
     }   
 }
 
+
+void visit(ALGraph * algraph,int v){
+    printf("visit ------> %d\n",algraph->vertices[v].data);
+}
+int visited[MAXNUM];
+Q * q;
+
+void initVisited(int n){
+    int i=0;
+    for(i=0;i<n;i++){
+        visited[i] = 0;
+    }
+}
+
+//  蔡写法 v 为编号
+void bfs(ALGraph * algraph,int v){
+    visit(algraph,v);
+    visited[v] = VISITED;
+    Q *_q = (Q*)malloc(sizeof(Q));
+    init(&_q);
+    EnQueue(&_q,v);
+    while(isEmpty(_q)!=0){
+        v = DeQueue(&_q);
+        ArcNode * p = algraph->vertices[v].first;
+//        printf("<------- v=%d,%d\n",v,p->adjvex);
+        while(p!=NULL){
+            if(!visited[p->adjvex]){
+   //             printf("adj--->%d\n",p->adjvex);
+                visit(algraph,p->adjvex);
+                visited[p->adjvex] = VISITED;
+                EnQueue(&_q,p->adjvex);
+            }
+            p = p->next;
+        }
+    }
+}
+
+void bfstraverse(ALGraph * algraph){
+    int i=0;
+    q = (Q*)malloc(sizeof(Q));
+    init(&q);
+    for(i=0;i<algraph->vexnum;i++){
+        visited[i] = NOT_VISITED;
+    }
+      //   有向图可能从某一 个顶点不能遍历完整个图
+      //   所以for
+//    for(i=0;i<algraph->vexnum;i++){
+
+//        if(!visited[i]){
+            bfs(algraph,2);
+   //    }
+    //}
+    
+}
+
+
+void dfs(ALGraph * algraph,int v){
+    visit(algraph,v);
+    visited[v] = VISITED;
+    ArcNode * f = algraph->vertices[v].first;
+    while(f!=NULL){
+        if(visited[f->adjvex]!=VISITED){
+            dfs(algraph,f->adjvex);
+          //  f = f->next;
+        }
+        f = f->next;
+    }
+}
+
+typedef struct Stack_Node{
+    int adjnum;
+    ArcNode * next_arc;
+}DFS_non_node;
+
+typedef struct Stack{
+    int data[MAXNUM];
+    int top;
+}DFS_Stack;
+
+// 深度优先非递归写法
+// 由于使用了栈 所以导致 由右边开始遍历，但是 任然是深度
+void dfs_non(ALGraph * algraph,int v){
+    if(algraph==NULL){
+        return;
+    }
+    initVisited(algraph->vexnum);
+    DFS_Stack * stack = (DFS_Stack*)malloc(sizeof(DFS_Stack));
+    stack->top = -1;
+    stack->data[++(stack->top)] = v;
+    visited[v] = VISITED;
+    //visit(algraph,v);
+    //ArcNode * p = algraph->vertices[v].first;
+    while(stack->top!=-1){
+        int k = stack->data[stack->top--];
+        visit(algraph,k);
+        ArcNode * p = algraph->vertices[k].first;
+        while(p!=NULL){
+            if(visited[p->adjvex]==NOT_VISITED){
+                stack->data[++(stack->top)] = p->adjvex;
+                visited[p->adjvex] = VISITED;
+            }
+            p = p->next;
+        }
+    }
+}
+
+void dfs_traverse(ALGraph * algraph){
+    int i=0;
+    for(i=0;i<algraph->vexnum;i++){
+        visited[i] = NOT_VISITED;
+    }
+    dfs(algraph,0);
+    printf("\n------非递归 深度------\n");
+    dfs_non(algraph,0);
+}
+
+
+
+
+void testQ(){
+    Q *queue = (Q*)malloc(sizeof(Q));
+    init(&queue);
+    EnQueue(&queue,100);
+ EnQueue(&queue,12);
+    EnQueue(&queue,13);
+//    EnQueue(&queue,14);
+    int a =  DeQueue(&queue);   
+    printf("dequeue : %d,%d\n",a,queue->data[0]);
+    printf("%d% d\n",queue->front,queue->rear);
+}
+
+// bfs单源最短路径
+void BFS_MIN_Distance(ALGraph * algraph,int u){
+    int di[MAXNUM];
+    int i=0;
+    Q *queue = (Q*)malloc(sizeof(Q));
+    init(&queue);
+    for(i=0;i<algraph->vexnum;i++){
+        di[i] = -1;
+        visited[i] = NOT_VISITED;
+    }
+    visited[u] = VISITED;
+    di[u] = 0;
+    EnQueue(&queue,u);
+    while(isEmpty(queue)!=0){
+        u = DeQueue(&queue);
+        ArcNode * p = algraph->vertices[u].first;
+        while(p!=NULL){
+            if(!visited[p->adjvex]){
+                visited[p->adjvex] = VISITED;
+                di[p->adjvex] = di[u] + 1;
+                EnQueue(&queue,p->adjvex);
+            
+            }
+            p = p->next;
+        }
+    }
+    for(i=0;i<algraph->vexnum;i++){
+        printf("%3d",di[i]);
+    }
+    printf("\n");
+}
+
+
 int main()
 {
+//bin    testQ();
     //testMgraph();
-    testAlgraph();
+   testAlgraph();
     return 0;
 }
 
