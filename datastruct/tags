@@ -15,6 +15,7 @@ DFS_non_node	graph.c	/^}DFS_non_node;$/;"	t	typeref:struct:Stack_Node	file:
 DeQueue	graph.c	/^    int DeQueue(Q **queue){$/;"	f
 Edge	graph.c	/^    int Edge[MAXNUM][MAXNUM];$/;"	m	struct:__anon1	file:
 EnQueue	graph.c	/^    void EnQueue(Q **queue,int _data){$/;"	f
+FindPath	graph.c	/^void FindPath(ALGraph * algraph,int u,int v,int path[],int d){$/;"	f
 I_ten	graph.c	/^typedef int I_ten[10];$/;"	t	file:
 MAXNUM	graph.c	3;"	d	file:
 MGraph	graph.c	/^}MGraph;$/;"	t	typeref:struct:__anon1	file:
@@ -37,6 +38,7 @@ arcnum	graph.c	/^    int vexnum,arcnum;$/;"	m	struct:__anon2	file:
 bfs	graph.c	/^void bfs(ALGraph * algraph,int v){$/;"	f
 bfstraverse	graph.c	/^void bfstraverse(ALGraph * algraph){$/;"	f
 create	graph.c	/^MGraph * create(){$/;"	f
+createAlgByArc	graph.c	/^ALGraph * createAlgByArc(){$/;"	f
 create_graph	graph.c	/^ALGraph * create_graph(){$/;"	f
 data	graph.c	/^    VertexType data;$/;"	m	struct:VNode	file:
 data	graph.c	/^    int data[MAXNUM];$/;"	m	struct:Queue	file:
@@ -48,6 +50,7 @@ edgenum	graph.c	/^    int vexnum,edgenum;$/;"	m	struct:__anon1	file:
 fin	graph.c	/^FILE * fin;$/;"	v
 first	graph.c	/^    ArcNode * first;$/;"	m	struct:VNode	file:
 front	graph.c	/^    int front;$/;"	m	struct:Queue	file:
+info	graph.c	/^    int info; \/\/  权值$/;"	m	struct:ArcNode	file:
 init	graph.c	/^    void init(Q **queue){$/;"	f
 initVisited	graph.c	/^void initVisited(int n){$/;"	f
 isEmpty	graph.c	/^    int isEmpty(Q *queue){$/;"	f
@@ -56,9 +59,12 @@ next	graph.c	/^    struct ArcNode * next;$/;"	m	struct:ArcNode	typeref:struct:Ar
 next_arc	graph.c	/^    ArcNode * next_arc;$/;"	m	struct:Stack_Node	file:
 print	graph.c	/^void print(ALGraph * g){$/;"	f
 printAlg	graph.c	/^void printAlg(ALGraph * algraph){$/;"	f
+printPath	graph.c	/^void printPath(int path[],int size){$/;"	f
 q	graph.c	/^Q * q;$/;"	v
 rear	graph.c	/^    int rear;$/;"	m	struct:Queue	file:
 testAlgraph	graph.c	/^void testAlgraph(){$/;"	f
+testCreateByArc	graph.c	/^void testCreateByArc(){$/;"	f
+testFindPath	graph.c	/^void testFindPath(){$/;"	f
 testMgraph	graph.c	/^void testMgraph(){$/;"	f
 testQ	graph.c	/^void testQ(){$/;"	f
 top	graph.c	/^    int top;$/;"	m	struct:Stack	file:

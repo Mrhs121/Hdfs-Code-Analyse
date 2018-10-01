@@ -26,6 +26,7 @@ FILE * fin;
 // ----邻接表------ 
 typedef struct ArcNode{
     int adjvex; //vertices index
+    int info; //  权值
     struct ArcNode * next;
 }ArcNode;
 
@@ -68,11 +69,13 @@ typedef struct Queue{
 void printAlg(ALGraph * algraph){
     int i=0;
     printf("---------------邻接表的结构-----------------\n");
+    printf("顶点 ---(权)--->adjvex-----(权)----->adjvex\n");
     for(i=0;i<algraph->vexnum;i++){
-        printf("%d: %d-->",i,algraph->vertices[i].data);
+        printf("%d: %d ",i,algraph->vertices[i].data);
         ArcNode * p = algraph->vertices[i].first;
         while(p!=NULL){
-            printf("%d(%d)-->",p->adjvex,algraph->vertices[p->adjvex].data);
+            printf("---(%d)--->%d(%d)",p->info,p->adjvex,algraph->vertices[p->adjvex].data
+                   );
             p = p->next;
         }
         printf("\n");
@@ -125,7 +128,66 @@ ALGraph * create_graph(){
     return  algraph;
 }
 
+// 按照边创建邻接表
+ALGraph * createAlgByArc(){
+    ALGraph * algraph = (ALGraph*)malloc(sizeof(ALGraph));
+    int i=0;
+    printf("input vexnum and arcnum:");
+    fscanf(fin,"%d%d",&algraph->vexnum,&algraph->arcnum);
+    printf("---->%d %d\n",algraph->vexnum,algraph->arcnum);
+    // printf("---->input all vex's data\n");
+    //初始化定点表
+    for(i=0;i<algraph->vexnum;i++){
+        //printf("input vex%d\'s data:",i);
+        fscanf(fin,"%d",&algraph->vertices[i].data);
+        algraph->vertices[i].first = (ArcNode*)malloc(sizeof(ArcNode));
+        algraph->vertices[i].first = NULL;
+    }
+    int v1,v2,info;
+    for(i=0;i<algraph->arcnum;i++){
+        fscanf(fin,"%d %d %d\n",&v1,&v2,&info);
+        ArcNode * p = (ArcNode*)malloc(sizeof(ArcNode));
+        ArcNode * t = (ArcNode*)malloc(sizeof(ArcNode));
+        p->next = NULL;
+        t->next = NULL;
+        if(algraph->vertices[v1].first == NULL){
+            //ArcNode * p = (ArcNode*)malloc(sizeof(ArcNode));
+            p->adjvex = v2;
+            p->info = info;
+            algraph->vertices[v1].first = p; 
+        } else {
+            p = algraph->vertices[v1].first;
+            while(p->next!=NULL)
+                p = p->next;
+            t->adjvex = v2;
+            t->info = info;
+            p->next = t;
+        }    
+        p = (ArcNode*)malloc(sizeof(ArcNode));
+        t = (ArcNode*)malloc(sizeof(ArcNode));
+        p->next = NULL;
+        t->next = NULL;
+        if(algraph->vertices[v2].first == NULL) {
+            //ArcNode * p = (ArcNode*)malloc(sizeof(ArcNode));
+            p->adjvex = v1;
+            p->info = info;
+            algraph->vertices[v2].first = p; 
+        } else {
+            p = algraph->vertices[v2].first;
+            while(p->next!=NULL)
+                p = p->next;
+            t->adjvex = v1;
+            t->info = info;
+            p->next = t;
+        }    
+          
+    }
 
+
+    
+
+    return algraph;
+}
 // 创建邻接举矩阵 
 MGraph * create(){
     FILE * fin = fopen("mgraph.txt","r");
@@ -173,6 +235,7 @@ void testAlgraph(){
     printAlg(algraph);
     void BFSTraverse(ALGraph * a,int v);
     void bfstraverse(ALGraph * a);
+    
     BFSTraverse(algraph,2);
     printf("\n----------bfs-------------\n");
     bfstraverse(algraph);
@@ -273,7 +336,9 @@ void bfs(ALGraph * algraph,int v){
         while(p!=NULL){
             if(!visited[p->adjvex]){
    //             printf("adj--->%d\n",p->adjvex);
+
                 visit(algraph,p->adjvex);
+               // if( vj == p->adjvex) 可用于判断是否存在路径
                 visited[p->adjvex] = VISITED;
                 EnQueue(&_q,p->adjvex);
             }
@@ -344,7 +409,7 @@ void dfs_non(ALGraph * algraph,int v){
         while(p!=NULL){
             if(visited[p->adjvex]==NOT_VISITED){
                 stack->data[++(stack->top)] = p->adjvex;
-                visited[p->adjvex] = VISITED;
+                visited[p->adjvex] = VISITED; // 以免 再次 入栈
             }
             p = p->next;
         }
@@ -356,6 +421,7 @@ void dfs_traverse(ALGraph * algraph){
     for(i=0;i<algraph->vexnum;i++){
         visited[i] = NOT_VISITED;
     }
+    printf("-------- 递归深度优先-----\n");
     dfs(algraph,0);
     printf("\n------非递归 深度------\n");
     dfs_non(algraph,0);
@@ -409,11 +475,68 @@ void BFS_MIN_Distance(ALGraph * algraph,int u){
 }
 
 
+void printPath(int path[],int size){
+    int i=0;
+    for(i=0;i<=size;i++){
+        printf("--->%d",path[i]);
+    }
+    printf("\n");
+}
+void FindPath(ALGraph * algraph,int u,int v,int path[],int d){
+    int w;
+    ArcNode * p;
+    d++;
+    path[d] = u;
+    visited[u] = VISITED;
+    if(u==v){
+        printf("finded :%d,%d ",u,v);
+        printPath(path,d);
+        visited[v] = NOT_VISITED;
+        return;
+    }
+    p = algraph->vertices[u].first;
+    while(p!=NULL){
+        w = p->adjvex;
+        if(visited[w] == NOT_VISITED){
+            FindPath(algraph,w,v,path,d);
+        }
+        p = p->next;
+    }
+    visited[u] = 0;
+}
+
+void testFindPath(){
+
+    fin = fopen("g_input.txt","r");
+    int path[MAXNUM] = {-1};
+    ALGraph * algraph = (ALGraph *)malloc(sizeof(ALGraph));
+    algraph = create_graph();
+    printAlg(algraph);
+    initVisited(algraph->vexnum); 
+    BFSTraverse(algraph,0);
+    printf("---------------find simple path -----------\n");
+    initVisited(algraph->vexnum);
+    FindPath(algraph,0,3,path,-1);
+}
+// 创建   代 权 的 图
+void testCreateByArc(){
+
+    fin = fopen("arc_input.txt","r");
+ //   int path[MAXNUM] = {-1};
+    ALGraph * algraph = (ALGraph *)malloc(sizeof(ALGraph));
+    algraph = createAlgByArc();
+    printAlg(algraph);
+    dfs_traverse(algraph);
+}
+
 int main()
 {
+    testCreateByArc();
+// 
+// testFindPath();
 //bin    testQ();
     //testMgraph();
-   testAlgraph();
+//   testAlgraph();
     return 0;
 }
 
