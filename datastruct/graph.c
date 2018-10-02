@@ -529,8 +529,15 @@ void testCreateByArc(){
     dfs_traverse(algraph);
 }
 
+
+void prim(){
+    printf("最小生成树代码");
+}
+
+
 int main()
 {
+    printf("------------test graph struct----------------\n");
     testCreateByArc();
 // 
 // testFindPath();
