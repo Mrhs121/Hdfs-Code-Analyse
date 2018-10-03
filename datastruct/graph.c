@@ -534,6 +534,10 @@ void prim(){
     printf("最小生成树代码");
 }
 
+void floyd(MGraph * mg,int n){
+
+}
+
 
 int main()
 {
