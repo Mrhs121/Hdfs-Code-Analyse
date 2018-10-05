@@ -127,6 +127,50 @@ ALGraph * create_graph(){
     }
     return  algraph;
 }
+ALGraph * createDAG(){
+    ALGraph * algraph = (ALGraph*)malloc(sizeof(ALGraph));
+    int i=0;
+    printf("input vexnum and arcnum:");
+    fscanf(fin,"%d%d",&algraph->vexnum,&algraph->arcnum);
+    printf("---->%d %d\n",algraph->vexnum,algraph->arcnum);
+    // printf("---->input all vex's data\n");
+    //初始化定点表
+    for(i=0;i<algraph->vexnum;i++){
+        //printf("input vex%d\'s data:",i);
+        fscanf(fin,"%d",&algraph->vertices[i].data);
+        algraph->vertices[i].first = (ArcNode*)malloc(sizeof(ArcNode));
+        algraph->vertices[i].first = NULL;
+    }
+    int v1,v2,info;
+    for(i=0;i<algraph->arcnum;i++){
+        fscanf(fin,"%d %d %d\n",&v1,&v2,&info);
+        ArcNode * p = (ArcNode*)malloc(sizeof(ArcNode));
+        ArcNode * t = (ArcNode*)malloc(sizeof(ArcNode));
+        p->next = NULL;
+        t->next = NULL;
+        if(algraph->vertices[v1].first == NULL){
+            //ArcNode * p = (ArcNode*)malloc(sizeof(ArcNode));
+            p->adjvex = v2;
+            p->info = info;
+            algraph->vertices[v1].first = p; 
+        } else {
+            p = algraph->vertices[v1].first;
+            while(p->next!=NULL)
+                p = p->next;
+            t->adjvex = v2;
+            t->info = info;
+            p->next = t;
+        }    
+        p = (ArcNode*)malloc(sizeof(ArcNode));
+        t = (ArcNode*)malloc(sizeof(ArcNode));
+        p->next = NULL;
+        t->next = NULL;
+          
+    }
+    return algraph;
+}
+
+
 
 // 按照边创建邻接表
 ALGraph * createAlgByArc(){
@@ -182,12 +226,10 @@ ALGraph * createAlgByArc(){
         }    
           
     }
-
-
-    
-
     return algraph;
 }
+
+
 // 创建邻接举矩阵 
 MGraph * create(){
     FILE * fin = fopen("mgraph.txt","r");
@@ -535,7 +577,8 @@ void prim(){
 }
 
 void floyd(MGraph * mg,int n){
-
+ // nt cost[MAXNUM][MAXNUM] = mg->Edge;
+    printf("最短路径算法");
 }
 
 
