@@ -143,7 +143,7 @@ ALGraph * createDAG(){
     }
     int v1,v2,info;
     for(i=0;i<algraph->arcnum;i++){
-        fscanf(fin,"%d %d %d\n",&v1,&v2,&info);
+        fscanf(fin,"%d %d\n",&v1,&v2);
         ArcNode * p = (ArcNode*)malloc(sizeof(ArcNode));
         ArcNode * t = (ArcNode*)malloc(sizeof(ArcNode));
         p->next = NULL;
@@ -151,14 +151,14 @@ ALGraph * createDAG(){
         if(algraph->vertices[v1].first == NULL){
             //ArcNode * p = (ArcNode*)malloc(sizeof(ArcNode));
             p->adjvex = v2;
-            p->info = info;
+            //p->info = info;
             algraph->vertices[v1].first = p; 
         } else {
             p = algraph->vertices[v1].first;
             while(p->next!=NULL)
                 p = p->next;
             t->adjvex = v2;
-            t->info = info;
+            //t->info = info;
             p->next = t;
         }    
         p = (ArcNode*)malloc(sizeof(ArcNode));
@@ -197,14 +197,14 @@ ALGraph * createAlgByArc(){
         if(algraph->vertices[v1].first == NULL){
             //ArcNode * p = (ArcNode*)malloc(sizeof(ArcNode));
             p->adjvex = v2;
-            p->info = info;
+           p->info = info;
             algraph->vertices[v1].first = p; 
         } else {
             p = algraph->vertices[v1].first;
             while(p->next!=NULL)
                 p = p->next;
             t->adjvex = v2;
-            t->info = info;
+           // t->info = info;
             p->next = t;
         }    
         p = (ArcNode*)malloc(sizeof(ArcNode));
@@ -458,6 +458,18 @@ void dfs_non(ALGraph * algraph,int v){
     }
 }
 
+void  getDegree(ALGraph * algraph,int degree[]){
+    int i;
+    ArcNode * p;
+    for(i=0;i<algraph->vexnum;i++){
+         p = algraph->vertices[i].first;
+         while(p!=NULL){
+            degree[p->adjvex] = degree[p->adjvex] + 1;
+            p = p->next;
+         }
+    }
+}
+
 void dfs_traverse(ALGraph * algraph){
     int i=0;
     for(i=0;i<algraph->vexnum;i++){
@@ -561,14 +573,24 @@ void testFindPath(){
     FindPath(algraph,0,3,path,-1);
 }
 // 创建   代 权 的 图
-void testCreateByArc(){
+ALGraph * testCreateByArc(){
 
     fin = fopen("arc_input.txt","r");
  //   int path[MAXNUM] = {-1};
     ALGraph * algraph = (ALGraph *)malloc(sizeof(ALGraph));
-    algraph = createAlgByArc();
+    //algraph = createAlgByArc();
+    algraph = createDAG();
     printAlg(algraph);
     dfs_traverse(algraph);
+    int degree[10] = {0,0,0,0,0,0,0,0,0,0};
+    
+    getDegree(algraph,degree);
+    int i;
+    for(i=0;i<algraph->vexnum;i++){
+        printf("%5d",degree[i]);
+    }
+    printf("\n");
+    return algraph;
 }
 
 
@@ -580,13 +602,53 @@ void floyd(MGraph * mg,int n){
  // nt cost[MAXNUM][MAXNUM] = mg->Edge;
     printf("最短路径算法");
 }
+void push(DFS_Stack * s,int data){
+    s->data[++(s->top)] = data;
+}
+int pop(DFS_Stack * s){
+    return s->data[(s->top)--];
+}
+// algraph : 邻接表
+int ToplogicalSort(ALGraph * algraph){
+    DFS_Stack * s = (DFS_Stack*)malloc(sizeof(DFS_Stack));
+    s->top = -1;
+    int degree[MAXNUM] = {0};
+    getDegree(algraph,degree);
+    int i=0;
+    for(i=0;i<algraph->vexnum;i++){
+        if(degree[i]==0)
+            push(s,i);
+    }
+    int element;
+    int count = 0;
+    ArcNode * p;
+    while(s->top != -1){
+        element = pop(s);
+        count++;
+        printf("index:%d data:%d\n ",element,algraph->vertices[element].data);
+        p = algraph->vertices[element].first;
+        while(p!=NULL){
+            int v = p->adjvex;
+            if(!(--degree[v]))
+                push(s,v);
+            p = p->next;
+        }
+    }
+    if(count < algraph->vexnum)
+        return 0;
+    else 
+        return 1;
+}// 如果一个顶点有多个直接后继，那么排序的结果不唯一
 
+void a(int b[]){
+    b[0] = 1;
+    b[1] = 2;
+}
 
 int main()
 {
-    printf("------------test graph struct----------------\n");
-    testCreateByArc();
-// 
+    ALGraph * algraph = testCreateByArc();
+    printf("--->toplfo sort :%d\n",ToplogicalSort(algraph));
 // testFindPath();
 //bin    testQ();
     //testMgraph();
