@@ -25,6 +25,7 @@ Queue	graph.c	/^typedef struct Queue{$/;"	s	file:
 Queue1	graph.c	/^}Queue1;$/;"	t	typeref:struct:__anon3	file:
 Stack	graph.c	/^typedef struct Stack{$/;"	s	file:
 Stack_Node	graph.c	/^typedef struct Stack_Node{$/;"	s	file:
+ToplogicalSort	graph.c	/^int ToplogicalSort(ALGraph * algraph){$/;"	f
 VISITED	graph.c	7;"	d	file:
 VNode	graph.c	/^typedef struct VNode{$/;"	s	file:
 VNode	graph.c	/^}VNode,AdjList[MAXNUM];$/;"	t	typeref:struct:VNode	file:
@@ -39,6 +40,7 @@ bfs	graph.c	/^void bfs(ALGraph * algraph,int v){$/;"	f
 bfstraverse	graph.c	/^void bfstraverse(ALGraph * algraph){$/;"	f
 create	graph.c	/^MGraph * create(){$/;"	f
 createAlgByArc	graph.c	/^ALGraph * createAlgByArc(){$/;"	f
+createDAG	graph.c	/^ALGraph * createDAG(){$/;"	f
 create_graph	graph.c	/^ALGraph * create_graph(){$/;"	f
 data	graph.c	/^    VertexType data;$/;"	m	struct:VNode	file:
 data	graph.c	/^    int data[MAXNUM];$/;"	m	struct:Queue	file:
@@ -49,7 +51,9 @@ dfs_traverse	graph.c	/^void dfs_traverse(ALGraph * algraph){$/;"	f
 edgenum	graph.c	/^    int vexnum,edgenum;$/;"	m	struct:__anon1	file:
 fin	graph.c	/^FILE * fin;$/;"	v
 first	graph.c	/^    ArcNode * first;$/;"	m	struct:VNode	file:
+floyd	graph.c	/^void floyd(MGraph * mg,int n){$/;"	f
 front	graph.c	/^    int front;$/;"	m	struct:Queue	file:
+getDegree	graph.c	/^void  getDegree(ALGraph * algraph,int degree[]){$/;"	f
 info	graph.c	/^    int info; \/\/  权值$/;"	m	struct:ArcNode	file:
 init	graph.c	/^    void init(Q **queue){$/;"	f
 initVisited	graph.c	/^void initVisited(int n){$/;"	f
@@ -57,6 +61,7 @@ isEmpty	graph.c	/^    int isEmpty(Q *queue){$/;"	f
 main	graph.c	/^int main()$/;"	f
 next	graph.c	/^    struct ArcNode * next;$/;"	m	struct:ArcNode	typeref:struct:ArcNode::ArcNode	file:
 next_arc	graph.c	/^    ArcNode * next_arc;$/;"	m	struct:Stack_Node	file:
+prim	graph.c	/^void prim(){$/;"	f
 print	graph.c	/^void print(ALGraph * g){$/;"	f
 printAlg	graph.c	/^void printAlg(ALGraph * algraph){$/;"	f
 printPath	graph.c	/^void printPath(int path[],int size){$/;"	f

@@ -29,11 +29,11 @@ int main()
 {
 
     char * b;
-    printf("%d\n",sizeof(b));
+    printf("%ld\n",sizeof(b));
     int * c;
-    printf("%d,%d\n",sizeof(c),sizeof(int));
+    printf("%ld,%ld\n",sizeof(c),sizeof(int));
     char *a[] = {"hello", "world","dsajfhjkdahfkhdsjlaljka"};
-    printf("%d,%d\n",sizeof(a)/sizeof(a[0]),sizeof(a[0]));
+    printf("%ld,%ld\n",sizeof(a)/sizeof(a[0]),sizeof(a[0]));
 /*  
     int a = 1;
     printf("a address:%p, b address:%p\n",&a,&b);

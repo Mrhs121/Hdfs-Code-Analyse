@@ -609,6 +609,7 @@ int pop(DFS_Stack * s){
     return s->data[(s->top)--];
 }
 // algraph : 邻接表
+// 图的拓扑排序
 int ToplogicalSort(ALGraph * algraph){
     DFS_Stack * s = (DFS_Stack*)malloc(sizeof(DFS_Stack));
     s->top = -1;
@@ -647,6 +648,7 @@ void a(int b[]){
 
 int main()
 {
+    
     ALGraph * algraph = testCreateByArc();
     printf("--->toplfo sort :%d\n",ToplogicalSort(algraph));
 // testFindPath();
