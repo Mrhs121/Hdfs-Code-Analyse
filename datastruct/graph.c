@@ -127,6 +127,8 @@ ALGraph * create_graph(){
     }
     return  algraph;
 }
+
+// 创建有向图
 ALGraph * createDAG(){
     ALGraph * algraph = (ALGraph*)malloc(sizeof(ALGraph));
     int i=0;
@@ -596,6 +598,14 @@ ALGraph * testCreateByArc(){
 
 void prim(){
     printf("最小生成树代码");
+}
+
+void Dijkstra(){
+
+}
+
+void Kruskal(){
+
 }
 
 void floyd(MGraph * mg,int n){
