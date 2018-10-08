@@ -6,6 +6,8 @@ typedef int I_ten[10];
 #define V_Type %d
 #define VISITED 1
 #define NOT_VISITED 0
+#define MAXX 999
+
 /*
  *  
  *  数据结构 图的存储结构以及相关的操作
@@ -15,7 +17,7 @@ typedef int I_ten[10];
 //---------邻接矩阵
 
 typedef struct{
-    char Vex[MAXNUM];
+    int Vex[MAXNUM];
     int Edge[MAXNUM][MAXNUM];
     int vexnum,edgenum;
 }MGraph;
@@ -239,24 +241,27 @@ MGraph * create(){
     fscanf(fin,"%d %d\n",&mgraph->vexnum,&mgraph->edgenum);
     int i=0;
     int j=0;
-    int l,r;
+    int l,r,info;
     printf("%d %d\n",mgraph->vexnum,mgraph->edgenum);
     for(i=0;i<mgraph->vexnum;i++){
        // printf("--->\n");
-        fscanf(fin,"%c\n",&mgraph->Vex[i]);
+        fscanf(fin,"%d ",&mgraph->Vex[i]);
     }
     for(i=0;i<mgraph->vexnum;i++){
         for(j=0;j<mgraph->vexnum;j++){
            // printf("%d %d\n",i,j);
-            mgraph->Edge[i][j] = 0;
+            mgraph->Edge[i][j] = MAXX;
+            if(i==j)
+                mgraph->Edge[i][j] = 0;
         }
     }
     for(i=0;i<mgraph->edgenum;i++){
-        fscanf(fin,"%d %d\n",&l,&r);
+        fscanf(fin,"%d %d %d\n",&l,&r,&info);
+        
         //printf("%d,%d\n",l,r);
         // 编号从0开始
-        mgraph->Edge[l][r] = 1;
-        mgraph->Edge[r][l] = 1;
+        mgraph->Edge[l][r] = info;
+        mgraph->Edge[r][l] = info;
     }
     return mgraph;
 }
@@ -269,6 +274,27 @@ void print(ALGraph * g){
     int i =0;
     for(i=0;i<g->vexnum;i++){
         printf("%4d",g->vertices[i].data);
+    }
+}
+
+void printM(MGraph * mgraph){
+    int i,j;
+
+    printf(" V |");
+    for(i=0;i<mgraph->vexnum;i++){
+        printf(" v%d  |",i);
+    }
+    printf("\n");
+    for(i=0;i<mgraph->vexnum;i++){
+        printf("v%d |",i);
+        for(j=0;j<mgraph->vexnum;j++){
+            printf("%5d|",mgraph->Edge[i][j]);
+        }
+        printf("\n----");
+        for(j=0;j<mgraph->vexnum;j++){
+            printf("------");
+        }
+        printf("\n");
     }
 }
 
@@ -297,13 +323,9 @@ void testAlgraph(){
 }
 void testMgraph(){
     MGraph * m = create();
-    int i=0,j=0;
-    for(i=0;i<m->vexnum;i++){
-        for(j=0;j<m->vexnum;j++){
-            printf("%3d",m->Edge[i][j]);
-        }
-        printf("\n");
-    }
+    printM(m);
+    void prim(MGraph * m,int p);
+    prim(m,0);
 }
 
 typedef struct{
@@ -595,9 +617,43 @@ ALGraph * testCreateByArc(){
     return algraph;
 }
 
-
-void prim(){
-    printf("最小生成树代码");
+// param : MGraph
+void prim(MGraph * mgraph,int start){
+    printf("最小生成树算法\n");
+    int cost[MAXNUM][MAXNUM];
+    int i,j,k,n,u;
+    int min;
+    int low[MAXNUM];
+    int close_set[MAXNUM];
+    int vexnum  = mgraph->vexnum;
+    for(i=0;i<vexnum;i++){
+        for(j=0;j<vexnum;j++){
+            cost[i][j] = mgraph->Edge[i][j];
+        }
+    }
+    // 初始化顶点的邻近的 边的代价 以及将其是顶点 并入 集合
+    for(i=0;i<vexnum;i++){
+        low[i] = cost[start][i];
+        close_set[i] = start;
+    }
+    // 需要循环 vexnum-1 
+    for(i=0;i<vexnum-1;i++){
+        min = MAXX;
+        for(j=0;j<vexnum;j++){
+            if(low[j]!=0 && low[j] < min){
+                min = low[j];
+                k = j; //save the current close
+            }
+        }
+        printf("{%d--%d% 5d}\n",close_set[k],k,cost[close_set[k]][k]);
+        low[k] = 0;
+        for(j=0;j<vexnum;j++){
+            if(cost[k][i]!=0 && cost[k][j]<low[j]){
+                low[j] = cost[k][j];
+                close_set[j] = k; //
+            }
+        }
+    }
 }
 
 void Dijkstra(){
@@ -605,7 +661,6 @@ void Dijkstra(){
 }
 
 void Kruskal(){
-
 }
 
 void floyd(MGraph * mg,int n){
@@ -659,11 +714,11 @@ void a(int b[]){
 int main()
 {
     
-    ALGraph * algraph = testCreateByArc();
-    printf("--->toplfo sort :%d\n",ToplogicalSort(algraph));
+   // ALGraph * algraph = testCreateByArc();
+  //  printf("--->toplfo sort :%d\n",ToplogicalSort(algraph));
 // testFindPath();
 //bin    testQ();
-    //testMgraph();
+    testMgraph();
 //   testAlgraph();
     return 0;
 }
