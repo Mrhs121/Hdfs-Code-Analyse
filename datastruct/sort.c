@@ -3,6 +3,7 @@
 
 void print(int b[],int n){
     int i;
+    printf("******* ");
     for(i=0;i<n;i++){
         printf("%5d->",b[i]);
     }
@@ -127,14 +128,60 @@ int find_k_min(int arr[],int low,int high,int k){
     }
 }
 
+
+
+void AdjustDown(int arr[],int k,int length){
+    arr[0] = arr[k];
+    int i;
+    for(i=2*k;i<=length;i*=2){
+        if(i<length&&arr[i]<arr[i+1])
+            i++;
+        if(arr[0] >= arr[i])
+            break;
+        else {
+            arr[k] = arr[i];
+            k = i;
+        }
+    }
+    arr[k] = arr[0];
+}
+
+// 大顶堆
+void buildHeap(int arr[],int length){
+    int i;
+    for(i=length/2;i>0;i--){
+        AdjustDown(arr,i,length);
+    }
+}
+
+// O(nlog2 n)
+void testHeap(){
+    int arr[] = {-1,53,17,78,9,45,65,87,32};
+    print(arr,9);
+    int i=0;
+    int len = 9;
+    buildHeap(arr,len);
+    for(i=len;i>1;i--){
+        printf("%d->",arr[1]);
+        swap(&arr[1],&arr[i]);
+        AdjustDown(arr,1,i-1);
+    }
+}
+
+
+
+
 int main()
 {
+
+    testHeap();
+    printf("\n-----------------\n");
     int b[10] = {412,1234,124,6,1234,1,412,4231,4 ,3,};
 //    int k_min = find_k_min(b,0,9,3);
     //printf("k_min = %d\n",k_min);
-    print(b,10);
+    //print(b,10);
     selectSort(b,10);
-    print(b,10);
+    //print(b,10);
     //print(b,10);
     //HalfInsertSort(b,10);
     //print(b,10);
