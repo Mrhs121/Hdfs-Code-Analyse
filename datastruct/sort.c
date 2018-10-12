@@ -3,6 +3,7 @@
 
 void print(int b[],int n){
     int i;
+    printf("\n");
     for(i=0;i<n;i++){
         printf("%5d",b[i]);
     }
@@ -158,17 +159,19 @@ void buildHeap(int arr[],int length){
 //堆排
 // O(nlog2 n)
 void testHeap(){
-    int arr[] = {-1,53,17,78,9,45,65,87,32};
-    print(arr,9);
+    int arr[] = {-1,123,4123,134,5,512,2,55,61,12,13,14,34};
+    print(arr,13);
     int i=0;
-    int len = 9;
+    // len为有效数据 的长度,except a[0]
+    int len = 12;
     buildHeap(arr,len);
-    for(i=len;i>1;i--){
+    for(i=len;i>=1;i--){
         printf("%5d",arr[1]);
         swap(&arr[1],&arr[i]);
         AdjustDown(arr,1,i-1);
     }
     printf("\n");
+    //print(arr,9);
 }
 
 
