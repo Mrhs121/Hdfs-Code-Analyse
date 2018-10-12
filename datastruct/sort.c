@@ -246,7 +246,7 @@ void ss(){
     int i = 0;
     srand(time(NULL));
     for(i=0;i<10;i++){
-         data[i] = rand()%100;
+         data[i] = rand()%(rand()%100);
     }
     LNode * list = createWithoutHead(data,10);
     printList(list);
@@ -266,10 +266,17 @@ void ss(){
         if(s==h){
             h = h->next;
         } else {
+            // 摘下当前最大的结点
+            // h逐渐减少
             r->next = s->next;
         }
+        //printList(list);
+        //头插，随后的序列为剩序
         s->next = list;
         list = s;
+        if(h!=NULL)
+            printList(h);
+        // 当 h 上的结点全部取下来之后，结束循环
     }
    printList(list);
 }
