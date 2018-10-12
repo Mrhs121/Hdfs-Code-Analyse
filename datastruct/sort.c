@@ -3,9 +3,8 @@
 
 void print(int b[],int n){
     int i;
-    printf("******* ");
     for(i=0;i<n;i++){
-        printf("%5d->",b[i]);
+        printf("%5d",b[i]);
     }
     printf("\n");
 }
@@ -38,7 +37,7 @@ void InsertSort(int arr[],int length){
     }
 }
 
-
+//  折半插入
 void HalfInsertSort(int arr[],int n){
     if(n<=1){
         return;
@@ -72,12 +71,13 @@ void HalfInsertSort(int arr[],int n){
 void dobule_pop(int arr[],int n){
     
 }
-
+// 拍排
 void QuickSort(int arr[],int left,int right){
     
 
 }
 
+// 选择排序
 // Time O(n^2) 
 // Space O(1)
 void selectSort(int arr[],int length){
@@ -101,6 +101,7 @@ void selectSort(int arr[],int length){
     }
 }
 
+// 查找一个无序的序列中第k个最小的
 int find_k_min(int arr[],int low,int high,int k){
     int pivot = arr[low];
     int l=low,r=high;
@@ -129,7 +130,7 @@ int find_k_min(int arr[],int low,int high,int k){
 }
 
 
-
+// 调整堆
 void AdjustDown(int arr[],int k,int length){
     arr[0] = arr[k];
     int i;
@@ -154,6 +155,7 @@ void buildHeap(int arr[],int length){
     }
 }
 
+//堆排
 // O(nlog2 n)
 void testHeap(){
     int arr[] = {-1,53,17,78,9,45,65,87,32};
@@ -162,10 +164,11 @@ void testHeap(){
     int len = 9;
     buildHeap(arr,len);
     for(i=len;i>1;i--){
-        printf("%d->",arr[1]);
+        printf("%5d",arr[1]);
         swap(&arr[1],&arr[i]);
         AdjustDown(arr,1,i-1);
     }
+    printf("\n");
 }
 
 
@@ -175,12 +178,12 @@ int main()
 {
 
     testHeap();
-    printf("\n-----------------\n");
-    int b[10] = {412,1234,124,6,1234,1,412,4231,4 ,3,};
+    //printf("\n-----------------\n");
+    //int b[10] = {412,1234,124,6,1234,1,412,4231,4 ,3,};
 //    int k_min = find_k_min(b,0,9,3);
     //printf("k_min = %d\n",k_min);
     //print(b,10);
-    selectSort(b,10);
+    //selectSort(b,10);
     //print(b,10);
     //print(b,10);
     //HalfInsertSort(b,10);
