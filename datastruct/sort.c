@@ -1,5 +1,7 @@
 #include <stdio.h>
-
+#include <time.h>
+#include <stdlib.h>
+#include "./myStrcut.h"
 
 void print(int b[],int n){
     int i;
@@ -131,6 +133,7 @@ int find_k_min(int arr[],int low,int high,int k){
 }
 
 
+
 // 调整堆
 void AdjustDown(int arr[],int k,int length){
     arr[0] = arr[k];
@@ -177,13 +180,105 @@ void testHeap(){
     //print(arr,9);
 }
 
+// test include   custom headfile
+void testHeadFile(){
+    int data[5] = {6,5,4,3,2};
+    LNode * list = create(data,5);
+    printf("%d\n",list->next->data);
+}
 
+void printList(LNode * list){
+    LNode * p = list;
+    if(list->data==-1){
+        p = p->next;
+    }
+    while(p!=NULL){
+        printf("%5d->",p->data);
+        p = p->next;
+    }
+    printf("\n");
+}
+void testListSelectSort(){
+    int data[10];
+    int i = 0;
+    srand(time(NULL));
+    for(i=0;i<10;i++){
+         data[i] = rand()%100;
+    }
+    LNode * list = create(data,10);
+    printList(list);
+    LNode  *q,*p,*t,*h,*pre,*min_pre;
+    pre = list;
+    q = pre->next;
+    while(q!=NULL){
+        printf("--->next\n");
+        p = q;
+        // 在链表中找到最小的结点
+        min_pre = pre;
+        //printf("current :%d\n",q->data);
+        while(p->next!=NULL){
+            if(p->next->data < min_pre->next->data){
+                min_pre = p;
+            }
+            p = p->next;
+        }
 
+        if(min_pre != pre){
+            //  交换两个结点
+            t = min_pre->next->next;
+            h = pre->next->next;
+            LNode * min = min_pre->next;
+            LNode * swap = pre->next;
+            min->next = h;
+            swap->next = t;
+            pre->next = min;
+            min_pre->next = swap;
+        }
+        printList(list);
+        pre = pre->next;
+        q = pre->next->next;
+    }
+    printList(list);
+}
 
+void ss(){
+  int data[10];
+    int i = 0;
+    srand(time(NULL));
+    for(i=0;i<10;i++){
+         data[i] = rand()%100;
+    }
+    LNode * list = createWithoutHead(data,10);
+    printList(list);
+    LNode  *h=list,*p,*q,*r,*s;
+    list = NULL;
+    while(h!=NULL){
+        p=s=h;
+        q=q=r=NULL;
+        while(p!=NULL){
+            if(p->data>s->data){
+                s = p;
+                r = q;
+            }
+            q = p;
+            p = p->next;
+        }
+        if(s==h){
+            h = h->next;
+        } else {
+            r->next = s->next;
+        }
+        s->next = list;
+        list = s;
+    }
+   printList(list);
+}
 int main()
-{
-
-    testHeap();
+{   
+ss();
+    //testListSelectSort();
+//    testHeadFile();
+   // testHeap();
     //printf("\n-----------------\n");
     //int b[10] = {412,1234,124,6,1234,1,412,4231,4 ,3,};
 //    int k_min = find_k_min(b,0,9,3);

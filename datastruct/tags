@@ -13,6 +13,10 @@ dobule_pop	sort.c	/^void dobule_pop(int arr[],int n){$/;"	f
 find_k_min	sort.c	/^int find_k_min(int arr[],int low,int high,int k){$/;"	f
 main	sort.c	/^int main()$/;"	f
 print	sort.c	/^void print(int b[],int n){$/;"	f
+printList	sort.c	/^void printList(LNode * list){$/;"	f
 selectSort	sort.c	/^void selectSort(int arr[],int length){$/;"	f
+ss	sort.c	/^void ss(){$/;"	f
 swap	sort.c	/^void swap(int * a,int * b){$/;"	f
+testHeadFile	sort.c	/^void testHeadFile(){$/;"	f
 testHeap	sort.c	/^void testHeap(){$/;"	f
+testListSelectSort	sort.c	/^void testListSelectSort(){$/;"	f

@@ -165,8 +165,9 @@ int findMid(int size,int a[],int b[]){
 int main()
 {
 
-	int a[5] = {11,13,15,17,19};
+	int b[5] = {11,13,15,17,19};
     SqList A,B;
+	int a[5] = {2,4,6,7,8};
     A.length = 0;
     B.length = 0;
     int i;
@@ -176,7 +177,6 @@ int main()
     }
     //A.data[0] = 1000;
     printf("test-->%d\n",A.data[0]);
-	int b[5] = {2,4,6,7,8};
 	for(i=0;i<5;i++){
         B.data[i] = b[i];
         B.length++;
