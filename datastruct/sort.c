@@ -166,6 +166,9 @@ void testHeap(){
     int len = 12;
     buildHeap(arr,len);
     for(i=len;i>=1;i--){
+        
+        
+        
         printf("%5d",arr[1]);
         swap(&arr[1],&arr[i]);
         AdjustDown(arr,1,i-1);

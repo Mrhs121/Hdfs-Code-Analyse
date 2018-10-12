@@ -645,14 +645,35 @@ void prim(MGraph * mgraph,int start){
                 k = j; //save the current close
             }
         }
+        printf("select min :%d,k=%d\n",min,k);
         printf("{%d--%d% 5d}\n",close_set[k],k,cost[close_set[k]][k]);
         low[k] = 0;
+        printf("low :");
+        for(j=0;j<vexnum;j++){
+            printf("%d  ",low[j]);
+        }
+        printf("\nclose_set:");
+        for(j=0;j<vexnum;j++){
+            printf("%d  ",close_set[j]);
+        }
+        printf("\n");
         for(j=0;j<vexnum;j++){
             if(cost[k][i]!=0 && cost[k][j]<low[j]){
                 low[j] = cost[k][j];
                 close_set[j] = k; //
             }
         }
+        //low[k] = 0;
+        printf("调整新的权值\nlow :");
+        for(j=0;j<vexnum;j++){
+            printf("%d  ",low[j]);
+        }
+        printf("\nclose_set:");
+        for(j=0;j<vexnum;j++){
+            printf("%d  ",close_set[j]);
+        }
+        printf("\n");
+
     }
 }
 
