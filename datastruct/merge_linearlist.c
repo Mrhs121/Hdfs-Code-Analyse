@@ -78,6 +78,23 @@ void mergeWithoutBuffer(SqList *A,SqList *B)
 
 //	return ture;
 }
+// 答案存在问题
+void meger_839_15(int a[],int n,int b[],int m){
+    void print(int a[],int n);
+    int i; // recoder b
+    int j; // recoder a
+    for(i=0;i<m;i++){
+        for(j=i+n-1;j>=0&&b[i]<a[i];--j){
+             a[i+1] = a[j];
+             print(a,7);
+        }
+        a[j+1] = b[i];
+        print(a,7);
+    }
+}
+
+
+
 
 void reverse(int A[],int left,int right,int size){
 	
@@ -162,8 +179,7 @@ int findMid(int size,int a[],int b[]){
 	// 复杂度O(n);
 	
 }
-int main()
-{
+void testWithOutBuffer(){
 
 	int b[5] = {11,13,15,17,19};
     SqList A,B;
@@ -188,7 +204,15 @@ int main()
     for(i=0;i<A.length;i++){
         printf("%3d",A.data[i]);
     }
-    //int middata = findMid(5,a,b);
+ 
+}
+int main()
+{
+    int a[100] = {1,2,4,5};
+    int b[3] = {3,7,8};
+    meger_839_15(a,4,b,3);
+    print(a,7);
+   //int middata = findMid(5,a,b);
 	//printf("the middata is :%d\n",middata);
 	//int a[100] = {1,2,3,4,5,6,7,100,101,102};
 	//searchExchangeInsert(a,10,77);
