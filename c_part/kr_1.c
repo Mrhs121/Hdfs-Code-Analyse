@@ -1,9 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 #define MAXLINE 1000
+#define MAXNUM 200
 
 
+typedef struct  Score{
+    int num;
+    char name[20];
+    int score;
+}Stu[200];
 
 void printString(char str[]);
 void getLine(char s[],int lim);
@@ -96,17 +102,121 @@ int setbits(int x,int p,int n,int y){
     // 然后将y的右边的n全部变为0
     y = (y>>n)<<n;
     return y | _n;
-} // nice
+} // nice 比kr答案简单很多
+
+
+
+void printStu(struct Score s[],int count){
+    int i=0;
+    printf("----- 原始数据 ------\n");
+    for(i=0;i<count;i++){
+        printf("%d %s %d\n",s[i].num,s[i].name,s[i].score);
+    }
+}
+
+
+
+void QuickSort(struct Score s[],int left,int right){
+    if(left>=right){
+        return;
+    }
+    int l = left;
+    int r = right;
+    int base = l;
+    struct Score tmp = s[left];
+    while(left<right){
+        while(s[right].score <= s[base].score && left<right)
+            right--;
+        while(s[left].score >= s[base].score && left<right)
+            left++;
+
+
+        printf("--\n");
+        if(left < right ){
+            printf("swap %d %d\n",left,right);
+            int i = left;
+            int j = right;
+            int num = s[i].num;
+            char name[20];
+            strcpy(name,s[i].name);
+            int score = s[i].score;
+
+            s[i].num = s[j].num;
+            strcpy(s[i].name,s[j].name);
+            s[i].score = s[j].score;
+
+            s[j].num = num;
+            strcpy(s[j].name,name);
+            s[j].score = score;
+
+        }
+    }
+    printf(".>>>>>>>>>>>>>>>>>>>>\n");
+    s[l] = s[left];
+    s[left] = tmp;
+    QuickSort(s,l,left-1);
+    QuickSort(s,left+1,r);
+}
+
+void ScoreSort(struct Score s[],int count){
+    
+}
+
+void write(FILE * out,struct Score s[],int count){
+    int i=0;
+    for(i=0;i<count;i++){
+        fprintf(out,"%d %s %d\n",s[i].num,s[i].name,s[i].score);
+    }
+}
+// 18年数据结构 第五大题
+void Five_18(){
+    char * inputFile1 = "./1.txt";
+    char * inputFile2 = "./2.txt";
+    char * outputFile = "./score.txt";
+    FILE  * out = fopen(outputFile,"w");
+    
+    FILE  * in1 = fopen(inputFile1,"r");
+    FILE  * in2 = fopen(inputFile2,"r");
+   // fprintf(out,"%s","hello world");
+    char  name[20];
+    int num;
+    int score;
+    int i=0;
+    int count=0;
+    struct Score stu[200];
+    while( fscanf(in1,"%d %s %d\n",&num,name,&score)!=EOF  ){
+        stu[i].num = num;
+       // stu[ii].name = name;
+        strcpy(stu[i].name,name);
+        stu[i].score  = score;
+        i++;
+        count++;
+    }
+    printf("--> %d%d\n",i,count);
+    while( fscanf(in2,"%d %s %d\n",&num,name,&score)!=EOF  ){
+        stu[i].num = num;
+        strcpy(stu[i].name,name);
+        stu[i].score  = score;
+        i++;
+        count++;
+    }
+    printStu(stu,count);
+    QuickSort(stu,0,count-1);
+    printStu(stu,count);
+    write(out,stu,count);
+}
 
 int main()
 {
-    char s[MAXLINE];
-    getLine(s,MAXLINE);
+    Five_18();
+//    char s[MAXLINE];
+//    getLine(s,MAXLINE);
+
     char str[] = {'a','b','c','d','e','f','g','h','j','k','\0'};
     //reverse(str,10);
-    BitwiseOperation();
-    printf("getBits %d\n",getBits(99,5,5));
-    printf("setbits %d\n",setbits(17,3,3,31));
+//    BitwiseOperation();
+//    printf("getBits %d\n",getBits(99,5,5));
+//    printf("setbits %d\n",setbits(17,3,3,31));
     return 0;
 }
 
