@@ -126,14 +126,20 @@ void QuickSort(struct Score s[],int left,int right){
     struct Score tmp = s[left];
     while(left<right){
         while(s[right].score <= s[base].score && left<right)
+        {  
             right--;
+            if(s[right].score == s[base].score && s[right].num < s[base].num)
+            {
+                right++;
+                break;
+            }
+        }
         while(s[left].score >= s[base].score && left<right)
             left++;
 
 
-        printf("--\n");
         if(left < right ){
-            printf("swap %d %d\n",left,right);
+            /*
             int i = left;
             int j = right;
             int num = s[i].num;
@@ -148,19 +154,49 @@ void QuickSort(struct Score s[],int left,int right){
             s[j].num = num;
             strcpy(s[j].name,name);
             s[j].score = score;
+            */
+            struct Score ll = s[left];
+            s[left] = s[right];
+            s[right] = ll;
 
         }
     }
-    printf(".>>>>>>>>>>>>>>>>>>>>\n");
     s[l] = s[left];
     s[left] = tmp;
     QuickSort(s,l,left-1);
     QuickSort(s,left+1,r);
 }
 
-void ScoreSort(struct Score s[],int count){
-    
+ 
+void QuickSort2(struct Score s[],int left,int right){
+    if(left>=right){
+        return;
+    }
+    int l = left;
+    int r = right;
+    int base = l;
+    struct Score tmp = s[left];
+    while(left<right){
+        while(s[right].num >= s[base].num && left<right)
+            right--;
+        while(s[left].num <= s[base].num && left<right)
+            left++;
+
+
+        if(left < right ){
+            
+            struct Score ll = s[left];
+            s[left] = s[right];
+            s[right] = ll;
+
+        }
+    }
+    s[l] = s[left];
+    s[left] = tmp;
+    QuickSort(s,l,left-1);
+    QuickSort(s,left+1,r);
 }
+   
 
 void write(FILE * out,struct Score s[],int count){
     int i=0;
@@ -169,6 +205,10 @@ void write(FILE * out,struct Score s[],int count){
     }
 }
 // 18年数据结构 第五大题
+//五、（本题共 20 分）两个班的成绩分别存放在两个文件当中。 
+//每个文件有多行，每行都是由空格分隔的学号、姓名和成绩。
+//现在要将两个班的成绩合并到一起进行排序按照成绩从高到低，如果相同则按学号由小到大排序
+//将结果输出一个文件当中。两个输入文件名与输出文件名使用命令行参数指定
 void Five_18(){
     char * inputFile1 = "./1.txt";
     char * inputFile2 = "./2.txt";
@@ -201,9 +241,20 @@ void Five_18(){
         count++;
     }
     printStu(stu,count);
+    QuickSort2(stu,0,count-1);
     QuickSort(stu,0,count-1);
     printStu(stu,count);
     write(out,stu,count);
+}
+
+
+int bitcount(unsigned x){
+    int b=0;
+    for(b=0; x!=0;x>>=1){
+        if(x&01)
+            b++;
+    }
+    return  b;
 }
 
 int main()
@@ -211,8 +262,9 @@ int main()
     Five_18();
 //    char s[MAXLINE];
 //    getLine(s,MAXLINE);
-
+    printf("bitcount :%d\n",bitcount(4));
     char str[] = {'a','b','c','d','e','f','g','h','j','k','\0'};
+    printf("%d\n",'a');
     //reverse(str,10);
 //    BitwiseOperation();
 //    printf("getBits %d\n",getBits(99,5,5));

@@ -1,6 +1,9 @@
+3 brown 135
 4 liaili 130
-1 huangsheng 120
-1 leililan 100
+4 huangdashen 130
+5 hehda 130
+3 moliansheng 120
+1 leililan 120
+1 huangsheng 119
 2 liudingpei 90
 2 youxiaoguang 80
-3 moliansheng 78
