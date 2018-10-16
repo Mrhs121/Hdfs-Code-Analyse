@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #define YES 1
 #define NO 0
 #define MAX 100
-
+#define eps 0.000000000001
 typedef struct  Score{
     int num;
     char name[20];
@@ -183,9 +184,23 @@ void Five_18(){
     write(out,stu,count);
 }
 
+float SqrtByNewton(float x)
+{
+    float val = x;//最终
+    float last;//保存上一个计算的值
+    do
+    {
+        last = val;
+        val =(val + x/val) / 2;
+                                        
+    }while(fabs(val-last) > eps);
+    return val;
+
+}
 
 int main()
 {
+    printf("sqrt : %f\n",SqrtByNewton(5));
     //printf("Hello world\n");
     int sudo[100][100];
     int n = readSudo(sudo);
