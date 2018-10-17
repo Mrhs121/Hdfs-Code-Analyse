@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #define TURE 1
 #define FALSE 0
 
@@ -34,8 +35,8 @@ void expend(char s1[],char s2[]){
     s2[j] = '\0';
 }
 
-int main()
-{
+
+void testExtend(){
     char str[] = {' ','h','s'};
     printf("%d %d\n",isspace(str[0]),isspace(str[1]));
     char s1[] = {'a','-','b','-',',','f','-','z'};
@@ -43,6 +44,33 @@ int main()
     expend(s1,s2);
     printString(s2);
     printf("Hello world\n");
+    //return 0;
+
+}
+
+void printd(int n){
+    if(n/10){
+        printd(n/10);
+    }
+    printf("%d-",n%10);
+}
+
+
+static int i=0;
+void itoa(int n,char s[]){
+    if(n/10)
+        itoa(n/10,s);
+    s[i++] = (n)%10+'a';
+    s[i] = '\0';
+}
+int main()
+{
+    char s[100];
+    itoa(123,s);
+    printf("%s\n",s);
+    printf("\n");
+    printd(1234);
+    printf("\n");
     return 0;
 }
 
