@@ -13,7 +13,14 @@ typedef struct BTree {
 	int data;
 	struct BTree* lchild;
 	struct BTree* rchild;
+    struct BTree * parent;
 }BTree;
+typedef struct ExtendBTree {
+	int data;
+	struct ExtendBTree* lchild;
+	struct ExtendBTree* rchild;
+    struct ExtendBTree * parent;
+}ExtendBTree;
 
 typedef struct BTree_char {
 	char data;
@@ -93,5 +100,63 @@ LNode * createWithoutHead(int data[],int n)
         m = node;
     }
     return head;
+}
+int _count;
+BTree* createTree(BTree* T,int _data[]) {
+
+    //printf("输入数据(-1表示空节点):");
+	int data;
+	//scanf("%d",&data);
+	data = _data[_count];
+	_count++;
+	if (data == -1)
+		return NULL;
+	else
+	{
+		T = (BTree*)malloc(sizeof(BTree));
+		T->data = data;
+		//cout << "input " << data << " 的左子树:" << endl;
+		T->lchild = createTree(T->lchild,_data);
+		//cout << "input " << data << " 的右子树:" << endl;
+		T->rchild = createTree(T->rchild,_data);
+	}
+	return T;
+}
+
+void PreOrderBiTree(BTree *T)
+{
+	if (T == NULL)
+	{
+		return;
+	}
+	else
+	{
+	
+        printf("%d ", T->data);
+        if(T->parent!=NULL){
+            printf(" parent:%d",T->parent->data);
+        }
+        printf("\n");
+        PreOrderBiTree(T->lchild);
+		PreOrderBiTree(T->rchild);
+	}
+}
+void PreOrderExBiTree(ExtendBTree *T)
+{
+	if (T == NULL)
+	{
+		return;
+	}
+	else
+	{
+	
+        printf("%d ", T->data);
+        if(T->parent!=NULL){
+            printf(" parent:%d",T->parent->data);
+        }
+        printf("\n");
+        PreOrderExBiTree(T->lchild);
+		PreOrderExBiTree(T->rchild);
+	}
 }
 
