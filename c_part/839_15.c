@@ -105,7 +105,7 @@ void QuickSort(struct Score s[],int left,int right){
 }
 
  
-void QuickSort2(struct Score s[],int left,int right){
+void QuickSortByIdcard(struct Score s[],int left,int right){
     if(left>=right){
         return;
     }
@@ -130,8 +130,8 @@ void QuickSort2(struct Score s[],int left,int right){
     }
     s[l] = s[left];
     s[left] = tmp;
-    QuickSort(s,l,left-1);
-    QuickSort(s,left+1,r);
+    QuickSortByIdcard(s,l,left-1);
+    QuickSortByIdcard(s,left+1,r);
 }
    
 
@@ -178,7 +178,7 @@ void Five_18(){
         count++;
     }
     printStu(stu,count);
-    QuickSort2(stu,0,count-1);
+    QuickSortByIdcard(stu,0,count-1);
     QuickSort(stu,0,count-1);
     printStu(stu,count);
     write(out,stu,count);

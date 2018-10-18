@@ -17,12 +17,12 @@ struct T{
 
 int main(int argc,char ** args)
 {
+    /*
     if(argc<2){
         printf("please give param islog\n");
         return -1;
     }
-    printf("%d , %s , %s, %s\n",argc,args[0],args[1],args[2]);
-    return 0;
+    */
     int i;
     struct T a[12];
     for(i=0;i<12;i++){
@@ -32,13 +32,7 @@ int main(int argc,char ** args)
     srand((unsigned)time(0));
     for(i=0;i<TIMES;i++){
         int v = (rand()%6+1) + (rand()%6+1);
-        if(args[0] == "y"){
-            printf("%d,",v);
-                if(i%100==0){
-                    printf("\n");
-                }
-            
-        }
+
         a[v-1].value++;
     }
     for(i=0;i<12;i++){

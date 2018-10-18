@@ -138,6 +138,9 @@ int find_k_min(int arr[],int low,int high,int k){
 void AdjustDown(int arr[],int k,int length){
     arr[0] = arr[k];
     int i;
+    // 从当前结点向下调整的时候，会沿着这条路径一直往下
+    // 判断，判断是否调整上层之后会影响下层的结构，如果回
+    // 则继续向下调整。
     for(i=2*k;i<=length;i*=2){
         if(i<length&&arr[i]<arr[i+1])
             i++;
@@ -168,10 +171,7 @@ void testHeap(){
     // len为有效数据 的长度,except a[0]
     int len = 12;
     buildHeap(arr,len);
-    for(i=len;i>=1;i--){
-        
-        
-        
+    for(i=len;i>=1;i--){ 
         printf("%5d",arr[1]);
         swap(&arr[1],&arr[i]);
         AdjustDown(arr,1,i-1);
@@ -240,7 +240,7 @@ void testListSelectSort(){
     }
     printList(list);
 }
-
+//  链表的选择排序
 void ss(){
   int data[10];
     int i = 0;
