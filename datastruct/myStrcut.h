@@ -13,7 +13,7 @@ typedef struct BTree {
 	int data;
 	struct BTree* lchild;
 	struct BTree* rchild;
-    struct BTree * parent;
+//    struct BTree * parent;
 }BTree;
 typedef struct ExtendBTree {
 	int data;
@@ -133,10 +133,6 @@ void PreOrderBiTree(BTree *T)
 	{
 	
         printf("%d ", T->data);
-        if(T->parent!=NULL){
-            printf(" parent:%d",T->parent->data);
-        }
-        printf("\n");
         PreOrderBiTree(T->lchild);
 		PreOrderBiTree(T->rchild);
 	}
