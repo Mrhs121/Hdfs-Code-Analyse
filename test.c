@@ -28,6 +28,7 @@ void change(int **p){
 int main()
 {
 
+    printf("test mac\n");
     char * b;
     printf("%ld\n",sizeof(b));
     int * c;
